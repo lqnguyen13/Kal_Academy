@@ -7,9 +7,10 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace MusicLibrary.Models
 {
-    class song
+    class Song
     {
         public string SongTitle { get; set; }
+        public string SongFileName { get; set; }
         public BitmapImage SongImage { get; set; }
     }
 }

@@ -12,7 +12,7 @@
     <Grid x:Name="Mysong" Height="300" Width="400" CornerRadius="8">
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin = "20, 0, 50, 240">
-                <Button x:Name="buttonClose"  Content="&#x2716;"   HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Click="ButtonClose_Click" FontFamily="Segoe UI Symbol" FontSize="18.667" RenderTransformOrigin="0,0" Height="36" Background="#00F6E8BF" />
+                <Button x:Name="buttonClose"  Content="&#x2716;"   HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Symbol" FontSize="18.667" RenderTransformOrigin="0,0" Height="36" Background="#00F6E8BF" />
                 <TextBlock Text="Song Name: " Margin="10" Width="100"/>
                 <TextBox Margin="10" Width="150" Text="{Binding Name, Mode=TwoWay}"/>
             </StackPanel>
