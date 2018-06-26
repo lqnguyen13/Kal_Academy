@@ -98,6 +98,7 @@
     <Compile Include="Controls\Song.xaml.cs">
       <DependentUpon>Song.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SongCanvas.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
