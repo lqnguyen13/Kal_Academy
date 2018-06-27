@@ -5,11 +5,52 @@
     xmlns:local="using:MusicLibrary"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:MusicLibrary.Models"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-       
+        <Grid>
+            <GridView x:Name="SongGridView" 
+                  ItemsSource="{x:Bind Songs}"
+                  IsItemClickEnabled="True"
+                  ItemClick="SongGridView_ItemClick">
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="data:Song">
+                        <StackPanel Width="1499">
+                            <StackPanel  Orientation="Horizontal" BorderThickness="2,2,2,2" RequestedTheme="Default" Padding="2,2,2,2" Margin="2,100,2,2" HorizontalAlignment="Stretch">
+                                <TextBlock Width="100" Height="20" >SONG ID</TextBlock>
+                                <TextBlock Width="250" Height="20">SONG TITLE</TextBlock>
+                                <TextBlock Width="250" Height="20">SONG ARTIST</TextBlock>
+                                <TextBlock Width="350" Height="20">PLAY OPTION</TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                <TextBlock x:Name="SongID" FontSize="16" Width="100" Height="20" Text="{x:Bind SongID}"/>
+                                <TextBlock x:Name="SongTitle" FontSize="16" Width="250" Height="20" Text="{x:Bind SongTitle}" />
+                                <TextBlock x:Name="SongArtist" FontSize="16" Width="250" Height="20" Text="{x:Bind SongArtist}" />
+                                <Button x:Name="Play_Button" Click="Play_Button_Click" >Play Song</Button>
+                                <Button x:Name="Stop_Button" Margin="10,0,0,0" Click="Stop_Button_Click">Stop Song</Button>
+                            </StackPanel>
+
+
+                        </StackPanel>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+        </Grid>
+        <MediaElement x:Name="myMediaElement" 
+                      Height="10" 
+                      Width="10" 
+                      AutoPlay="False"
+                      />
+        <TextBlock x:Name="ResultTextBlock" HorizontalAlignment="Left" Margin="95,580,0,0" Text="You Selected :   " TextWrapping="Wrap" VerticalAlignment="Top" Height="90" Width="473" FontSize="48" FontFamily="Arial Black" TextDecorations="Underline" Visibility="Visible"/>
 
     </Grid>
+
+
+
+
+
 </Page>
+
+
