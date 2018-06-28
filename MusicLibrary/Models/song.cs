@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace MusicLibrary.Models
 {
+
     public class Song
     {
         public int SongID { get; set; }
@@ -20,6 +21,8 @@ namespace MusicLibrary.Models
 
     public class SongManager
     {
+        const string TEXT_FILE_NAME = "SongsTextfile.txt";
+
         public static List<Song> GetSong()
         {
             var songs = new List<Song>();
@@ -29,6 +32,33 @@ namespace MusicLibrary.Models
             songs.Add(new Song { SongID = 3, SongTitle = "Bollywood", SongArtist = "Latha Mangeshwar", SongImage = "Assets/katyperry.jpg" });
             return songs;
         }
+
+        // read songs from file
+        // return list of Song objects
+    
+        public static async  Task<List<Song>> ReadSongsFromFile()
+        {
+            var songs = new List<Song>();
+            var songList = await FileHelper.ReadTextFile(TEXT_FILE_NAME);
+            foreach (var aSong in songList)
+            {
+                var songParts = aSong.Split('|');
+                var newSong = new Song
+                {
+                    SongID = int.Parse(songParts[0]),
+                    SongTitle = songParts[1],
+                    SongArtist = songParts[2],
+                    SongImage = songParts[3],
+                };
+                songs.Add(newSong);
+            }
+            return songs;
+        }
+
+
+
+
+
     }
 
 
