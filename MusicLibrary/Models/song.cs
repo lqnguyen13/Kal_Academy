@@ -43,13 +43,17 @@ namespace MusicLibrary.Models
             return songs;
         }
 
-        public async static void WriteSong(Song song)
+        public static async Task WriteSongsToFile(List<Song> songs)
         {
-            var songData = $"{song.SongID}|{song.SongTitle}|{song.SongArtist}|{song.SongImage}|{song.AudioFile}";
-            await FileHelper.WriteOneLine(TEXT_FILE_NAME, songData);
+            var songLines = new List<string>();
+            string songLine = "";
+            foreach (var song in songs)
+            {
+                songLine = $"{song.SongID.ToString()}|{song.SongTitle}|{song.SongArtist}|{song.SongImage}";
+                songLines.Add(songLine);
+            }
+            await FileHelper.WriteTextFile(TEXT_FILE_NAME2, songLines);
         }
-
-
     }
     //public class SongManager
     //{
@@ -67,7 +71,7 @@ namespace MusicLibrary.Models
 
     //    // read songs from file
     //    // return list of Song objects
-    
+
     //    public static async  Task<List<Song>> ReadSongsFromFile()
     //    {
     //        var songs = new List<Song>();

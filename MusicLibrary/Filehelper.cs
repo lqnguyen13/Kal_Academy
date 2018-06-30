@@ -11,24 +11,17 @@ namespace MusicLibrary
 {
     class FileHelper
     {
-        public static async Task<string> WriteOneLine(string filename, string line)
+        public static async Task<string> WriteTextFile(string filename, List<string> lines)
         {
-            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-            StorageFile sampleFile = await storageFolder.GetFileAsync(filename);
+            // Get the path to the app's Assets folder.
+            string root = Windows.ApplicationModel.Package.Current.InstalledLocation.Path;
+            string path = root + @"\Assets";
 
-            var datastream = await sampleFile.OpenAsync(FileAccessMode.ReadWrite);
+            StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(path);
+            StorageFile file =  await folder.CreateFileAsync(filename,CreationCollisionOption.ReplaceExisting);
+            await FileIO.WriteLinesAsync(file, lines);
 
-            using (var outputStream = datastream.GetOutputStreamAt(datastream.Size))
-            {
-                using (DataWriter datawriter = new DataWriter(outputStream))
-                {
-                    datawriter.WriteString(line);
-                    await datawriter.StoreAsync();
-                    await outputStream.FlushAsync();
-                }
-            }
-            datastream.Dispose();
-            return sampleFile.Path;
+            return file.Path;
         }
 
         public static async Task<IList<string>> ReadTextFile(string filename)
@@ -46,7 +39,6 @@ namespace MusicLibrary
                 return null;
             }
             var contents = await FileIO.ReadLinesAsync(file);
-
             return contents;
         }
     }
