@@ -22,6 +22,7 @@ namespace MusicLibrary.Models
     public class SongManager
     {
         const string TEXT_FILE_NAME = "SongsTextfile.txt";
+        const string TEXT_FILE_NAME2 = "SongsTextfileOut.txt";
 
         public static List<Song> GetSong()
         {
@@ -55,10 +56,17 @@ namespace MusicLibrary.Models
             return songs;
         }
 
-
-
-
-
+        public static async Task WriteSongsToFile(List<Song> songs)
+        {
+            var songLines = new List<string>();
+            string songLine = "";
+            foreach (var song in songs)
+            {
+                songLine = $"{song.SongID.ToString()}|{song.SongTitle}|{song.SongArtist}|{song.SongImage}";
+                songLines.Add(songLine);
+            }
+            await FileHelper.WriteTextFile(TEXT_FILE_NAME2, songLines);
+        }
     }
 
 

@@ -31,13 +31,15 @@ namespace MusicLibrary
         public MainPage()
         {
             this.InitializeComponent();
-            Songs = SongManager.GetSong();
+          //  Songs = SongManager.GetSong();
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             Songs = await SongManager.ReadSongsFromFile();
+
+            SongManager.WriteSongsToFile(Songs);
         }
 
         public void playSoundButton_Click(object sender, RoutedEventArgs e)
