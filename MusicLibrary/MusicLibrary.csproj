@@ -95,8 +95,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Song.xaml.cs">
-      <DependentUpon>Song.xaml</DependentUpon>
+    <Compile Include="Controls\SongControl.xaml.cs">
+      <DependentUpon>SongControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SongCanvas.cs" />
     <Compile Include="FileHelper.cs" />
@@ -114,6 +114,7 @@
     <None Include="MusicLibrary_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\AbbeyRoadCover.png" />
     <Content Include="Assets\Come Together.mp3" />
     <Content Include="Assets\SongsTextfile.txt" />
     <Content Include="Properties\Default.rd.xml" />
@@ -130,7 +131,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Controls\Song.xaml">
+    <Page Include="Controls\SongControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

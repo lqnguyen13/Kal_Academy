@@ -3,6 +3,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MusicLibrary"
+    xmlns:local1="using:MusicLibrary.Models"
+    xmlns:local2="using:MusicLibrary.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:data="using:MusicLibrary.Models"
@@ -10,6 +12,64 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <StackPanel x:Name="OuterPanel" Orientation="Vertical">
+            <StackPanel x:Name="TopPanel" Orientation="Horizontal">
+                <StackPanel x:Name="LeftPanel" Orientation="Vertical" HorizontalAlignment="Left" Height="600" Margin="70,82,10,0" VerticalAlignment="Top" Width="500">
+                    <TextBlock x:Name="SongListBlock" FontSize="48" Margin="0,0,0,20"><Run Text="Song Library"/></TextBlock>
+                    <Grid>
+                        <GridView x:Name="SongsGrid" IsItemClickEnabled="True" ItemsSource="{Binding}" ItemClick="SongsGrid_ItemClick">
+                            <GridView.ItemTemplate>
+                                <DataTemplate x:DataType = "data:Song">
+                                    <StackPanel Orientation = "Vertical" Margin = "2">
+                                        <StackPanel Orientation="Horizontal" Width="450" Margin="2">
+                                            <TextBlock Text="TITLE: " Margin="0,0,5,0"/>
+                                            <TextBlock Text = "{x:Bind Path=SongTitle}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Width="450" Margin="2">
+                                            <TextBlock Text="ARTIST: " Margin="0,0,5,0" />
+                                            <TextBlock Text = "{x:Bind Path=SongArtist}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel x:Name="RightPanel" Orientation="Vertical" Margin="0,82,0,0" HorizontalAlignment="Left" Height="600" VerticalAlignment="Top" Width="386">
+                    <TextBlock x:Name="SongSelectedBlock" FontSize="48"><Run Text="Song Selected"/></TextBlock>
+                    <StackPanel x:Name="SelectedSongPanel" Margin="0,20,0,0">
+                        <TextBlock x:Name="SelectedSongTitle" Text="" Margin = "20,10,20,0" Width="440" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="20"/>
+                        <TextBlock x:Name="SelectedSongArtist" Text="" Margin = "20,10,20,0" Width="440" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="20"/>
+                        <Image x:Name="SelectedSongImage" HorizontalAlignment="Center" Height="300" VerticalAlignment="Top" Source="ms-appx:///Assets/Square150x150Logo.png" Margin="0,10,0,10" Width="300" Stretch="UniformToFill"/>
+                    </StackPanel>
+                    <StackPanel x:Name="SongActionsPanel" Orientation="Horizontal" Width="450" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0,15,0,0">
+                        <Button x:Name="PlaySoundButton" Content="Play" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="75,0,50,0" Click="PlaySoundButton_Click"/>
+                        <Button x:Name="PauseSoundButton" Content="Pause" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="25,0,25,0" Click="PauseSoundButton_Click"/>
+                        <Button x:Name="StopSoundButton" Content="Stop" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="50,0,50,0" Click="StopSoundButton_Click"/>
+                    </StackPanel>
+                    <MediaElement x:Name="myMediaElement" 
+                                  Height="50" 
+                                  Width="250" 
+                                  AutoPlay="False" 
+                                  Margin="0,20,0,0"
+                                  />
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="BottomPanel" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Width="1000" Margin="70,20,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="AddRemove" Content="+/- Song" HorizontalAlignment="Left" VerticalAlignment="Top" Height="50" Margin="100,0,0,0" FontSize="24" Click="AddRemove_Click"/>
+                    <StackPanel x:Name="SearchPanel" Orientation="Vertical">
+                        <TextBox x:Name="SearchSongTitle" HorizontalAlignment="Left" PlaceholderText="Enter Song Name You Want To Search For" VerticalAlignment="Top" Height="50" FontSize="20" Margin="250,0,0,0"/>
+                        <Button x:Name="SearchButton" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Center" Height="50" FontSize="24" Margin="250,10,0,0" Click="SearchButton_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+
+    <!--<Grid>
         <Grid>
             <GridView x:Name="SongGridView" 
                   ItemsSource="{x:Bind Songs}"
@@ -45,7 +105,7 @@
                       />
         <TextBlock x:Name="ResultTextBlock" HorizontalAlignment="Left" Margin="95,580,0,0" Text="You Selected :   " TextWrapping="Wrap" VerticalAlignment="Top" Height="90" Width="473" FontSize="48" FontFamily="Arial Black" TextDecorations="Underline" Visibility="Visible"/>
 
-    </Grid>
+    </Grid>-->
 
 
 
