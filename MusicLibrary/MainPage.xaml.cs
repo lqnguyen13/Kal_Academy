@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using MusicLibrary.Models;
 using Windows.UI.Xaml.Media.Imaging;
+using MusicLibrary.Controls;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -60,6 +61,9 @@ namespace MusicLibrary
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             // ENTER CODE/FUNCTION CALL HERE TO SEARCH FOR SONG INDICATED IN SEARCH BOX
+            SongCanvas sg = new SongCanvas();
+
+            sg.FilterSongs(this.SearchSongTitle.Text);
         }
 
         public void PlaySoundButton_Click(object sender, RoutedEventArgs e)

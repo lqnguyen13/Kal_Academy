@@ -18,6 +18,11 @@ namespace MusicLibrary.Models
         public string SongImage { get; set; }
         public string AudioFile { get; set; }
 
+        public Song()
+        {
+
+        }
+
         public async static Task<ICollection<Song>> GetSongs()
         {
             var songs = new List<Song>();

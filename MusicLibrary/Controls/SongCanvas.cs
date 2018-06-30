@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MusicLibrary.Models;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -59,6 +60,24 @@ namespace MusicLibrary.Controls
         {
             var songs = Children.Select(cp => GetVisualChild<SongControl>(cp));
             return songs.ToList();
+        }
+
+        public Song FilterSongs(string searchSongTitle)
+        {
+            // Each child control is a ContentPresenter that's wrapping a Note control.
+            var children = Children;
+
+            foreach (var songContentPresenter in children)
+            {
+                SongControl n = GetVisualChild<SongControl>(songContentPresenter);
+                Song sn = n.DataContext as Song;
+
+                if (sn.SongTitle == searchSongTitle)
+                {
+                   return sn;
+                }
+            }
+            return null;
         }
 
         private List<SongControl> _songsList;
