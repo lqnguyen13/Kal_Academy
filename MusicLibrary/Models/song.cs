@@ -52,7 +52,7 @@ namespace MusicLibrary.Models
                 songLine = $"{song.SongID.ToString()}|{song.SongTitle}|{song.SongArtist}|{song.SongImage}";
                 songLines.Add(songLine);
             }
-            await FileHelper.WriteTextFile(TEXT_FILE_NAME2, songLines);
+            await FileHelper.WriteTextFile(TEXT_FILE_NAME, songLines);
         }
     }
     //public class SongManager

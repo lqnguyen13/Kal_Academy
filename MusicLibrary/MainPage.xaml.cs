@@ -33,24 +33,16 @@ namespace MusicLibrary
         public MainPage()
         {
             this.InitializeComponent();
-<<<<<<< HEAD
-          //  Songs = SongManager.GetSong();
-=======
-            //Songs = SongManager.GetSong();
->>>>>>> 167a8272134d414438519ff6f4d6519078e18071
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-<<<<<<< HEAD
-            Songs = await SongManager.ReadSongsFromFile();
+          /*  Songs = await SongManager.ReadSongsFromFile();
 
-            SongManager.WriteSongsToFile(Songs);
-=======
+            SongManager.WriteSongsToFile(Songs);*/
             //Songs = await SongManager.ReadSongsFromFile();
             this.DataContext = await Song.GetSongs();
->>>>>>> 167a8272134d414438519ff6f4d6519078e18071
         }
 
         private void SongsGrid_ItemClick(object sender, ItemClickEventArgs e)
