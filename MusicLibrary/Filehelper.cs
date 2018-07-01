@@ -9,7 +9,7 @@ using Windows.Storage.Streams;
 
 namespace MusicLibrary
 {
-    class FileHelper
+    public static class FileHelper
     {
         public static async Task<string> WriteTextFile(string filename, List<string> lines)
         {

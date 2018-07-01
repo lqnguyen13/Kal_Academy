@@ -1,26 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace MusicLibrary.Models
 {
-
-    public class Song
+    [DataContract]
+    public class Song : BindableBase
     {
 
         const string TEXT_FILE_NAME = "SongsTextfile.txt";
-
+        private static int _globalCount;
         public int SongID { get; set; }
         public string SongTitle { get; set; }
         public string SongArtist { get; set; }
         public string SongImage { get; set; }
         public string AudioFile { get; set; }
+        public BitmapImage SongSetImage => new BitmapImage(IsProfileImage ? new Uri(ImageFileName) : new Uri(new Uri("ms-appx://"), ImageFileName)) { CreateOptions = BitmapCreateOptions.IgnoreImageCache };
+
+        public bool IsProfileImage { get; set; }
+
+        [DataMember]
+        public string ImageFileName
+        {
+            get
+            {
+                return _imageFileName;
+            }
+            set
+            {
+                SetProperty(ref _imageFileName, value);
+                OnPropertyChanged(nameof(SongSetImage));
+            }
+        }
+
+        private string _imageFileName;
 
         public Song()
         {
 
+        }
+
+        public Song(Song song)
+        {
+            this.SongTitle = song.SongTitle;
+            this.SongArtist = song.SongArtist;
+            this.ImageFileName = song.ImageFileName;
+            IsProfileImage = false;
+            this.SongID = ++_globalCount;
         }
 
         public async static Task<ICollection<Song>> GetSongs()
@@ -41,6 +71,23 @@ namespace MusicLibrary.Models
                 songs.Add(newSong);
             }
             return songs;
+        }
+
+        public static List<Song> FilterSongs(string searchSongTitle, ICollection<Song> songList)
+        {
+            // songList = await Song.GetSongs();
+            var results = new List<Song>();
+            foreach (var songContentPresenter in songList)
+            {
+                var songTitle = songContentPresenter.SongTitle;
+                var st = songTitle.ToLower();
+
+                if (st.Contains(searchSongTitle))
+                {
+                    results.Add(songContentPresenter);
+                }
+            }
+            return results;
         }
 
         public static async Task WriteSongsToFile(List<Song> songs)

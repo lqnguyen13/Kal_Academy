@@ -61,24 +61,21 @@ namespace MusicLibrary.Controls
             var songs = Children.Select(cp => GetVisualChild<SongControl>(cp));
             return songs.ToList();
         }
+        public Song songs { get; set; }
 
-        public Song FilterSongs(string searchSongTitle)
+       
+
+        /*public Song AddSong(Song song)
         {
-            // Each child control is a ContentPresenter that's wrapping a Note control.
-            var children = Children;
+            Song newSong = new Song(song);
 
-            foreach (var songContentPresenter in children)
-            {
-                SongControl n = GetVisualChild<SongControl>(songContentPresenter);
-                Song sn = n.DataContext as Song;
-
-                if (sn.SongTitle == searchSongTitle)
-                {
-                   return sn;
-                }
-            }
-            return null;
+            return newSong;
         }
+
+        public Song RemoveSong()
+        {
+
+        }*/
 
         private List<SongControl> _songsList;
     }

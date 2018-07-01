@@ -1,0 +1,42 @@
+﻿<Page
+    x:Class="MusicLibrary.Controls.AddRemoveSong"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MusicLibrary.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <TextBlock x:Name="SongListBlock" FontSize="48" Margin="100,40,0,0"><Run Text="Add or Remove Song From Library"/></TextBlock>
+        <Button x:Name = "readFile" Content = "Remove Song From Playlist"  
+         HorizontalAlignment = "Left" Margin = "62,518,0,0"  
+         VerticalAlignment = "Top" Height = "37" Width = "200"  
+         Click = "readFile_Click"/>
+
+        <TextBox x:FieldModifier = "public" x:Name = "textBox"  
+         HorizontalAlignment = "Left" Margin = "58,145,0,0" TextWrapping = "Wrap"  
+         VerticalAlignment = "Top" Height = "276" Width = "245"/>
+
+        <Button x:Name = "writeFile" Content = "Add Song To Playlist"
+         HorizontalAlignment = "Left" Margin = "64,459,0,0"  
+         VerticalAlignment = "Top" Click = "writeFile_Click"/>
+
+        <TextBlock x:Name = "textBlock" HorizontalAlignment = "Left"  
+         Margin = "386,149,0,0" TextWrapping = "Wrap"  
+         VerticalAlignment = "Top" Height = "266" Width = "250"  
+         Foreground = "#FF6231CD"/>
+        <Button x:Name = "backToPlayList" Content = "Go Back To Playlist"
+         HorizontalAlignment = "Left" Margin = "64,580,0,0"  
+         VerticalAlignment = "Top" Click = "backToPlayList_Click"/>
+        <StackPanel x:Name="ARPanel" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Width="1000" Margin="250,20,0,0">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel x:Name="AddRemovePanel" Orientation="Vertical">
+                    <TextBox x:Name="SongTitle" HorizontalAlignment="Left" PlaceholderText="Enter Song Title" VerticalAlignment="Top" Width="400" Height="50" FontSize="20" Margin="150,0,0,0"/>
+                    <TextBox x:Name="SongArtist" HorizontalAlignment="Left" PlaceholderText="Enter Song Artist" VerticalAlignment="Top" Width="400" Height="50" FontSize="20" Margin="150,20,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

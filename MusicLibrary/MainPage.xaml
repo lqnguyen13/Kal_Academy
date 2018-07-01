@@ -57,12 +57,11 @@
                 </StackPanel>
             </StackPanel>
 
-            <StackPanel x:Name="BottomPanel" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Width="1000" Margin="70,20,0,0">
+            <StackPanel x:Name="BottomPanel" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Width="1000" Margin="10,20,0,0">
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="AddRemove" Content="+/- Song" HorizontalAlignment="Left" VerticalAlignment="Top" Height="50" Margin="100,0,0,0" FontSize="24" Click="AddRemove_Click"/>
-                    <StackPanel x:Name="SearchPanel" Orientation="Vertical">
-                        <TextBox x:Name="SearchSongTitle" HorizontalAlignment="Left" PlaceholderText="Enter Song Name You Want To Search For" VerticalAlignment="Top" Height="50" FontSize="20" Margin="250,0,0,0"/>
-                        <Button x:Name="SearchButton" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Center" Height="50" FontSize="24" Margin="250,10,0,0" Click="SearchButton_Click"/>
+                    <StackPanel x:Name="SearchPanel" Orientation="Horizontal">
+                        <Button x:Name="SearchButton" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Center" Height="50" FontSize="24" Margin="20,0,0,0" Click="SearchButton_Click"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

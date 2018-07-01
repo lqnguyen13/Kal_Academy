@@ -95,6 +95,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BindableBase.cs" />
+    <Compile Include="Controls\AddRemoveSong.xaml.cs">
+      <DependentUpon>AddRemoveSong.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SearchResults.xaml.cs">
+      <DependentUpon>SearchResults.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SongControl.xaml.cs">
       <DependentUpon>SongControl.xaml</DependentUpon>
     </Compile>
@@ -103,6 +110,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model.cs" />
     <Compile Include="Models\Song.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -131,6 +139,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\AddRemoveSong.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SearchResults.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\SongControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

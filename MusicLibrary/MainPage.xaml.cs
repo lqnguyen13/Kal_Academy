@@ -58,14 +58,13 @@ namespace MusicLibrary
         private void AddRemove_Click(object sender, RoutedEventArgs e)
         {
             // ENTER CODE/FUNCTION CALL HERE TO NAVIGATE TO A SEPARATE PAGE TO ADD A SONG
+            this.Frame.Navigate(typeof(AddRemoveSong));
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             // ENTER CODE/FUNCTION CALL HERE TO SEARCH FOR SONG INDICATED IN SEARCH BOX
-            SongCanvas sg = new SongCanvas();
-
-            sg.FilterSongs(this.SearchSongTitle.Text);
+            this.Frame.Navigate(typeof(SearchResults));
         }
 
         public void PlaySoundButton_Click(object sender, RoutedEventArgs e)
