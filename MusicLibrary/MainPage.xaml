@@ -12,12 +12,15 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <StackPanel x:Name="OuterPanel" Orientation="Vertical">
+        <StackPanel x:Name="OuterPanel" Background="Beige"    Orientation="Vertical">
             <StackPanel x:Name="TopPanel" Orientation="Horizontal">
-                <StackPanel x:Name="LeftPanel" Orientation="Vertical" HorizontalAlignment="Left" Height="600" Margin="70,82,10,0" VerticalAlignment="Top" Width="500">
+                <StackPanel x:Name="LeftPanel" BorderThickness="5"   Orientation="Vertical" HorizontalAlignment="Left" Height="600" Margin="70,82,10,0" VerticalAlignment="Top" Width="500">
+                    <StackPanel.Background>
+                        <ImageBrush/>
+                    </StackPanel.Background>
                     <TextBlock x:Name="SongListBlock" FontSize="48" Margin="0,0,0,20"><Run Text="Song Library"/></TextBlock>
                     <Grid>
-                        <GridView x:Name="SongsGrid" IsItemClickEnabled="True" ItemsSource="{Binding}" ItemClick="SongsGrid_ItemClick">
+                        <GridView x:Name="SongsGrid"  Background="Bisque" BorderThickness="10"  IsItemClickEnabled="True" ItemsSource="{Binding}" ItemClick="SongsGrid_ItemClick">
                             <GridView.ItemTemplate>
                                 <DataTemplate x:DataType = "data:Song">
                                     <StackPanel Orientation = "Vertical" Margin = "2">
@@ -37,12 +40,13 @@
                     </Grid>
                 </StackPanel>
 
-                <StackPanel x:Name="RightPanel" Orientation="Vertical" Margin="0,82,0,0" HorizontalAlignment="Left" Height="600" VerticalAlignment="Top" Width="386">
+                
+                <StackPanel x:Name="RightPanel"   Orientation="Vertical" Margin="0,82,0,0" HorizontalAlignment="Left" Height="600" VerticalAlignment="Top" Width="386">
                     <TextBlock x:Name="SongSelectedBlock" FontSize="48"><Run Text="Song Selected"/></TextBlock>
                     <StackPanel x:Name="SelectedSongPanel" Margin="0,20,0,0">
                         <TextBlock x:Name="SelectedSongTitle" Text="" Margin = "20,10,20,0" Width="440" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="20"/>
                         <TextBlock x:Name="SelectedSongArtist" Text="" Margin = "20,10,20,0" Width="440" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="20"/>
-                        <Image x:Name="SelectedSongImage" HorizontalAlignment="Center" Height="300" VerticalAlignment="Top" Source="ms-appx:///Assets/Square150x150Logo.png" Margin="0,10,0,10" Width="300" Stretch="UniformToFill"/>
+                        <Image x:Name="SelectedSongImage"   HorizontalAlignment="Center" Height="300" VerticalAlignment="Top" Source="ms-appx:///Assets/musicplayer1.jpg" Margin="0,10,0,10" Width="300" Stretch="UniformToFill"/>
                     </StackPanel>
                     <StackPanel x:Name="SongActionsPanel" Orientation="Horizontal" Width="450" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0,15,0,0">
                         <Button x:Name="PlaySoundButton" Content="Play" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="75,0,50,0" Click="PlaySoundButton_Click"/>
