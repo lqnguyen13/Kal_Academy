@@ -37,12 +37,13 @@ namespace MusicLibrary
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            base.OnNavigatedTo(e);
+           await Song.CopyAllFromAssetToLocal();
+           base.OnNavigatedTo(e);
           /*  Songs = await SongManager.ReadSongsFromFile();
 
             SongManager.WriteSongsToFile(Songs);*/
             //Songs = await SongManager.ReadSongsFromFile();
-            this.DataContext = await Song.GetSongs();
+            DataContext = await Song.GetSongs();
         }
 
         private void SongsGrid_ItemClick(object sender, ItemClickEventArgs e)

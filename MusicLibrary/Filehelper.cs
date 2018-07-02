@@ -11,7 +11,7 @@ namespace MusicLibrary
 {
     public static class FileHelper
     {
-        public static async Task<string> WriteTextFile(string filename, List<string> lines)
+        public static async Task WriteTextFile(string filename, List<string> lines)
         {
             // Get the path to the app's Assets folder.
             string root = Windows.ApplicationModel.Package.Current.InstalledLocation.Path;
@@ -21,18 +21,13 @@ namespace MusicLibrary
             StorageFile file =  await folder.CreateFileAsync(filename,CreationCollisionOption.ReplaceExisting);
             await FileIO.WriteLinesAsync(file, lines);
 
-            return file.Path;
         }
 
         public static async Task<IList<string>> ReadTextFile(string filename)
-        {           
-            // Get the path to the app's Assets folder.
-            string root = Windows.ApplicationModel.Package.Current.InstalledLocation.Path;
-            string path = root + @"\Assets";
+        {
 
             // Get the folder object that corresponds to this absolute path in the file system.
-            StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(path);
-
+            var folder = ApplicationData.Current.LocalFolder;
             StorageFile file = await folder.GetFileAsync(filename);
             if ( !File.Exists(file.Path))
             {
@@ -80,6 +75,55 @@ namespace MusicLibrary
 
             }
             return contents;
+        }
+        /// <summary>
+        /// Copy all the assets to the local folder. Later, could just copy the assets listed in the song file
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        public static async Task CopyAllFromAssetToLocal()
+        {
+            // Get the path to the app's Assets folder.
+            string installedLocationPath = Windows.ApplicationModel.Package.Current.InstalledLocation.Path;
+            string assetPath = installedLocationPath + @"\Assets";
+
+            StorageFolder assetFolder = await StorageFolder.GetFolderFromPathAsync(assetPath);
+
+            IReadOnlyList< StorageFile>fileList = await assetFolder.GetFilesAsync();
+
+            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+
+            foreach (var file in fileList)
+            {
+                StorageFile assetFile = await assetFolder.GetFileAsync(file.Name);
+                StorageFile localFile = await localFolder.CreateFileAsync(file.Name, CreationCollisionOption.OpenIfExists);
+
+                if (localFile.IsAvailable)
+                {
+                    await localFile.DeleteAsync();
+                }
+                await assetFile.CopyAsync(localFolder);
+            }
+        }
+
+        public static async Task CopyFromAssetToLocal(string filename)
+        {
+            // Get the path to the app's Assets folder.
+            string installedLocationPath = Windows.ApplicationModel.Package.Current.InstalledLocation.Path;
+            string assetPath = installedLocationPath + @"\Assets";
+
+            StorageFolder assetFolder = await StorageFolder.GetFolderFromPathAsync(assetPath);
+            StorageFile assetFile = await assetFolder.GetFileAsync(filename);
+            
+            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+            StorageFile localFile = await localFolder.GetFileAsync(filename);
+
+            if (localFile.IsAvailable)
+            {
+                await localFile.DeleteAsync();
+            }
+
+            await assetFile.CopyAsync(localFolder);
         }
     }
 }

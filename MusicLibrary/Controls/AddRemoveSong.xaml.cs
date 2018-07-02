@@ -30,10 +30,10 @@ namespace MusicLibrary.Controls
             this.InitializeComponent();
         }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            this.DataContext = await Song.GetSongsAsync();
+            this.DataContext = await Song.GetSongs();
         }
 
         private async void readFile_Click(object sender, RoutedEventArgs e)
