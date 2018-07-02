@@ -7,10 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local1="using:MusicLibrary.Models"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource AppBarBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock x:Name="SongListBlock" FontSize="48" Margin="100,40,0,0"><Run Text="Add or Remove Song From Library"/></TextBlock>
+        <TextBlock x:Name="SongListBlock" FontSize="48" Margin="200,40,0,0"><Run Text="Add or Remove Song"/></TextBlock>
         <Button x:Name = "readFile" Content = "Remove Song From Playlist"  
          HorizontalAlignment = "Left" Margin = "62,518,0,0"  
          VerticalAlignment = "Top" Height = "37" Width = "200"  

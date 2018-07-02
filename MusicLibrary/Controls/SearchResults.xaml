@@ -10,11 +10,25 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <StackPanel x:Name="BottomPanel" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Width="1000" Margin="10,20,0,0">
+        <GridView Name="Songs" ItemsSource="{Binding}" Height="300" Width="500" Margin="50, 0,0,0">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="data:Song">
+                    <StackPanel Orientation="Horizontal" Margin="2">
+                        <StackPanel Orientation="Vertical" Width="450" Margin="2">
+                            <TextBlock Text="TITLE: " Margin="0,0,5,0"/>
+                            <TextBlock Text="{x:Bind SongTitle}" Width="95" Margin="2"></TextBlock>
+
+                            <TextBlock Text="ARTIST: " Margin="0,0,5,0"/>
+                            <TextBlock Text="{x:Bind SongArtist}" Width="95" Margin="2" x:Phase="1"></TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+        <StackPanel x:Name="BottomPanel" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="1000" Margin="150,0,0,50">
             <StackPanel Orientation="Horizontal">
                 <StackPanel x:Name="SearchPanel" Orientation="Horizontal">
-                    <Button x:Name = "backToPlayList" Content = "Go Back To Playlist" HorizontalAlignment = "Left" Margin="30, 0 ,0, 0" Height="50" Width="120" FontSize="20"
-         VerticalAlignment = "Top" Click = "backToMain_Click"/>
+                    <Button x:Name = "backToPlayList" Content = "Go Back To Playlist" HorizontalAlignment = "Left" Margin="30, 0 ,0, 0" Height="50" Width="200" FontSize="20" Click = "backToMain_Click"/>
                     <TextBox x:Name="SearchSongTitle" HorizontalAlignment="Left" Width="400" PlaceholderText="Enter Song Name You Want To Search For" VerticalAlignment="Top" Height="50" FontSize="20" Margin="40,0,0,0"/>
                     <Button x:Name="SearchForSongs" Content="Search" Height="50" Width="120" FontSize="24" HorizontalAlignment="Left" Click="SearchForSongs_Click" Margin="30, 0 ,0, 0"/>
                 </StackPanel>
