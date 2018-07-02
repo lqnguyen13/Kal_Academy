@@ -40,6 +40,11 @@ namespace MusicLibrary.Controls
             this.DataContext = Song.FilterSongs(this.SearchSongTitle.Text, songs);
         }
 
+        private void backToMain_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MainPage));
+        }
+
 
         // SongCanvas sg = new SongCanvas();
         // Song song = sg.DataContext as Song;
