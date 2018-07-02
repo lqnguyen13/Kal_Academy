@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MusicLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,22 +23,34 @@ namespace MusicLibrary.Controls
     /// </summary>
     public sealed partial class AddRemoveSong : Page
     {
-        const string TEXT_FILE_NAME = "SampleTextFile.txt";
+        const string TEXT_FILE_NAME = "SongsTextfile.txt";
 
         public AddRemoveSong()
         {
             this.InitializeComponent();
         }
 
-        private async void readFile_Click(object sender, RoutedEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-          //  string str = await FileHelper.ReadTextFile(TEXT_FILE_NAME);
-           // textBlock.Text = str;
+            base.OnNavigatedTo(e);
+            this.DataContext = await Song.GetSongsAsync();
         }
 
-        private async void writeFile_Click(object sender, RoutedEventArgs e)
+        private async void readFile_Click(object sender, RoutedEventArgs e)
         {
-          // string textFilePath = await FileHelper.WriteTextFile(TEXT_FILE_NAME, textBox.Text);
+            string str = await FileHelper.ReadTextFileSongs(TEXT_FILE_NAME);
+            textBlock.Text = str;
+        }
+
+        private void writeFile_Click(object sender, RoutedEventArgs e)
+        {
+            //string textFilePath = await FileHelper.WriteTextFileSongs(TEXT_FILE_NAME, textBox.Text);
+            var song = new Song
+            {
+                SongTitle = songTitle.Text,
+                SongArtist = songArtist.Text
+            };
+            Song.WriteSong(song);
         }
 
         private void backToPlayList_Click(object sender, RoutedEventArgs e)

@@ -41,5 +41,45 @@ namespace MusicLibrary
             var contents = await FileIO.ReadLinesAsync(file);
             return contents;
         }
+
+        public static async Task<string> WriteTextFileSongs(string filename, string contents)
+        {
+
+            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+            StorageFile textFile = await localFolder.CreateFileAsync(filename,
+               CreationCollisionOption.OpenIfExists); // ReplaceExisting change it to append instead of deleting the content
+
+            using (IRandomAccessStream textStream = await
+               textFile.OpenAsync(FileAccessMode.ReadWrite))
+            {
+
+                using (DataWriter textWriter = new DataWriter(textStream))
+                {
+                    textWriter.WriteString(contents);
+                    await textWriter.StoreAsync();
+                }
+            }
+            return textFile.Path;
+        }
+
+        public static async Task<string> ReadTextFileSongs(string filename)
+        {
+            string contents;
+            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+            StorageFile textFile = await localFolder.GetFileAsync(filename);
+
+            using (IRandomAccessStream textStream = await textFile.OpenReadAsync())
+            {
+
+                using (DataReader textReader = new DataReader(textStream))
+                {
+                    uint textLength = (uint)textStream.Size;
+                    await textReader.LoadAsync(textLength);
+                    contents = textReader.ReadString(textLength);
+                }
+
+            }
+            return contents;
+        }
     }
 }

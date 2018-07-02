@@ -5,6 +5,7 @@
     xmlns:local="using:MusicLibrary.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local1="using:MusicLibrary.Models"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -33,10 +34,21 @@
         <StackPanel x:Name="ARPanel" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Width="1000" Margin="250,20,0,0">
             <StackPanel Orientation="Horizontal">
                 <StackPanel x:Name="AddRemovePanel" Orientation="Vertical">
-                    <TextBox x:Name="SongTitle" HorizontalAlignment="Left" PlaceholderText="Enter Song Title" VerticalAlignment="Top" Width="400" Height="50" FontSize="20" Margin="150,0,0,0"/>
-                    <TextBox x:Name="SongArtist" HorizontalAlignment="Left" PlaceholderText="Enter Song Artist" VerticalAlignment="Top" Width="400" Height="50" FontSize="20" Margin="150,20,0,0"/>
+                    <TextBox x:Name="songTitle" Text="{Binding SongTitle, Mode=TwoWay}" HorizontalAlignment="Left" PlaceholderText="Enter Song Title" VerticalAlignment="Top" Width="400" Height="50" FontSize="20" Margin="150,0,0,0"/>
+                    <TextBox x:Name="songArtist" Text="{Binding SongArtist, Mode=TwoWay}" HorizontalAlignment="Left" PlaceholderText="Enter Song Artist" VerticalAlignment="Top" Width="400" Height="50" FontSize="20" Margin="150,20,0,0"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>
+
+        <GridView Name="Songs" ItemsSource="{Binding}" Height="300" Width="500" Margin="550, 0,0,0">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="local1:Song">
+                    <StackPanel Orientation="Horizontal" Margin="2">
+                        <TextBlock Text="{x:Bind SongTitle}" Width="95" Margin="2"></TextBlock>
+                        <TextBlock Text="{x:Bind SongArtist}" Width="95" Margin="2" x:Phase="1"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
     </Grid>
 </Page>

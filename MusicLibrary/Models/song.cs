@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace MusicLibrary.Models
@@ -11,8 +12,7 @@ namespace MusicLibrary.Models
     [DataContract]
     public class Song : BindableBase
     {
-
-        const string TEXT_FILE_NAME = "SongsTextfile.txt";
+        const string TEXT_FILE_NAME = "SongsTextfile.txt";//@"\Assets\SongsTextfile.txt";
         private static int _globalCount;
         public int SongID { get; set; }
         public string SongTitle { get; set; }
@@ -100,6 +100,33 @@ namespace MusicLibrary.Models
                 songLines.Add(songLine);
             }
             await FileHelper.WriteTextFile(TEXT_FILE_NAME, songLines);
+        }
+
+        public async static Task<ICollection<Song>> GetSongsAsync()
+        {
+            var songs = new List<Song>();
+
+            var folder = ApplicationData.Current.LocalFolder;
+            var songFile = await folder.GetFileAsync(TEXT_FILE_NAME);
+            var lines = await FileIO.ReadLinesAsync(songFile);
+
+            foreach (var line in lines)
+            {
+                var songData = line.Split(',');
+                var song = new Song
+                {
+                    SongTitle = songData[0],
+                    SongArtist = songData[1]
+                };
+                songs.Add(song);
+            }
+            return songs;
+        }
+
+        public async static void WriteSong(Song song)
+        {
+            var songData = $"{song.SongTitle}, {song.SongArtist}";
+            await FileHelper.WriteTextFileSongs(TEXT_FILE_NAME, songData);
         }
     }
     //public class SongManager
