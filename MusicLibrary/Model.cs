@@ -30,7 +30,7 @@ namespace MusicLibrary
             }
         }
 
-        public void AddSong(Song song) => SongCollection.Add(new Song(song));
+ //       public void AddSong(Song song) => SongCollection.Add(new Song(song));
 
         public void DeleteSong(Song songToDelete) => SongCollection.Remove(songToDelete);
 

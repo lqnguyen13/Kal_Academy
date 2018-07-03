@@ -13,19 +13,13 @@ namespace MusicLibrary
     {
         public static async Task WriteTextFile(string filename, List<string> lines)
         {
-            // Get the path to the app's Assets folder.
-            string root = Windows.ApplicationModel.Package.Current.InstalledLocation.Path;
-            string path = root + @"\Assets";
-
-            StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(path);
+            StorageFolder folder = ApplicationData.Current.LocalFolder; ;
             StorageFile file =  await folder.CreateFileAsync(filename,CreationCollisionOption.ReplaceExisting);
             await FileIO.WriteLinesAsync(file, lines);
-
         }
 
         public static async Task<IList<string>> ReadTextFile(string filename)
         {
-
             // Get the folder object that corresponds to this absolute path in the file system.
             var folder = ApplicationData.Current.LocalFolder;
             StorageFile file = await folder.GetFileAsync(filename);
@@ -100,9 +94,12 @@ namespace MusicLibrary
 
                 if (localFile.IsAvailable)
                 {
-                    await localFile.DeleteAsync();
+                    // do nothing
                 }
-                await assetFile.CopyAsync(localFolder);
+                else
+                {
+                    await assetFile.CopyAsync(localFolder);
+                }
             }
         }
 
