@@ -99,6 +99,9 @@
     <Compile Include="Controls\AddRemoveSong.xaml.cs">
       <DependentUpon>AddRemoveSong.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SearchResults.xaml.cs">
       <DependentUpon>SearchResults.xaml</DependentUpon>
     </Compile>
@@ -142,6 +145,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Controls\AddRemoveSong.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
