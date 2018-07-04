@@ -24,18 +24,18 @@
             </StackPanel>
             <StackPanel>
                 <TextBlock HorizontalAlignment="Left" Height="84" VerticalAlignment="Center" Width="300" Margin="20,0,0,0" FontSize="48">Search Results</TextBlock>
-            
-                <GridView Name="Songs" ItemsSource="{Binding}" Height="400" HorizontalAlignment="Left" Margin="14,0,0,0">
+
+                <GridView Name="Songs" ItemsSource="{Binding}" Height="400" Width="600" HorizontalAlignment="Left" Margin="14,0,0,0">
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="data:Song">
                             <StackPanel Orientation="Vertical">
                                 <StackPanel Orientation="Horizontal" Margin="2">
                                     <TextBlock Text="TITLE: " Margin="0,0,5,0"/>
-                                    <TextBlock Text="{x:Bind SongTitle}"></TextBlock>
+                                    <TextBlock Text="{x:Bind SongTitle}" Width="600"></TextBlock>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="2">
                                     <TextBlock Text="ARTIST: " Margin="0,0,5,0"/>
-                                    <TextBlock Text="{x:Bind SongArtist}"></TextBlock>
+                                    <TextBlock Text="{x:Bind SongArtist}" Width="600"></TextBlock>
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>
