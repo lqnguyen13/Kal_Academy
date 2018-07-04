@@ -126,10 +126,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\AbbeyRoadCover.png" />
+    <Content Include="Assets\All You Need Is Love.mp3" />
+    <Content Include="Assets\All You Need Is Love_album.png" />
+    <Content Include="Assets\Bohemian Rhapsody.mp3" />
+    <Content Include="Assets\bohemian_rhapsody_album.png" />
     <Content Include="Assets\ComeTogether.mp3" />
+    <Content Include="Assets\Fearless_album.png" />
+    <Content Include="Assets\Imagine.mp3" />
+    <Content Include="Assets\imagine_album.png" />
+    <Content Include="Assets\in_between_dreams_album.png" />
+    <Content Include="Assets\Love Story.mp3" />
     <Content Include="Assets\musicplayer.png" />
     <Content Include="Assets\musicplayer1.jpg" />
     <Content Include="Assets\SongsTextfile.txt" />
+    <Content Include="Assets\Taylor.mp3" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
