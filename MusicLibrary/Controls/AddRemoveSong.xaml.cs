@@ -24,6 +24,7 @@ namespace MusicLibrary.Controls
     public sealed partial class AddRemoveSong : Page
     {
         const string TEXT_FILE_NAME = "SongsTextfile.txt";
+        private ICollection<Song> songList;
 
         public AddRemoveSong()
         {
@@ -33,7 +34,7 @@ namespace MusicLibrary.Controls
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            this.DataContext = await Song.GetSongs();
+            this.DataContext = await Song.GetSongsAsync();
         }
 
         private async void readFile_Click(object sender, RoutedEventArgs e)
@@ -42,15 +43,18 @@ namespace MusicLibrary.Controls
             textBlock.Text = str;
         }
 
-        private void writeFile_Click(object sender, RoutedEventArgs e)
+        private void addSong_Click(object sender, RoutedEventArgs e)
         {
             //string textFilePath = await FileHelper.WriteTextFileSongs(TEXT_FILE_NAME, textBox.Text);
             var song = new Song
             {
                 SongTitle = songTitle.Text,
-                SongArtist = songArtist.Text
+                SongArtist = songArtist.Text,
+                SongID = 0,
+                SongImage = "N/A",
+                AudioFileName = "N/A"
             };
-            Song.WriteSong(song);
+            Song.AddSong(song);
         }
 
         private void backToPlayList_Click(object sender, RoutedEventArgs e)

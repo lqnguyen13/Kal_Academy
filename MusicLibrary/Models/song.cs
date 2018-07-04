@@ -13,12 +13,12 @@ namespace MusicLibrary.Models
     public class Song : BindableBase
     {
         const string TEXT_FILE_NAME = "SongsTextfile.txt";
-        private static int _globalCount;
+        private static int _globalCount = 3;
         public int SongID { get; set; }
         public string SongTitle { get; set; }
         public string SongArtist { get; set; }
         public string SongImage { get; set; }
-        public string AudioFile { get; set; }
+        public string AudioFileName { get; set; }
         public BitmapImage SongSetImage => new BitmapImage(IsProfileImage ? new Uri(ImageFileName) : new Uri(new Uri("ms-appx://"), ImageFileName)) { CreateOptions = BitmapCreateOptions.IgnoreImageCache };
 
         public bool IsProfileImage { get; set; }
@@ -44,16 +44,16 @@ namespace MusicLibrary.Models
 
         }
 
-        public Song(Song song)
-        {
-            this.SongTitle = song.SongTitle;
-            this.SongArtist = song.SongArtist;
-            this.ImageFileName = song.ImageFileName;
-            IsProfileImage = false;
-            this.SongID = ++_globalCount;
-        }
+        //public Song(Song song)
+        //{
+        //    this.SongTitle = song.SongTitle;
+        //    this.SongArtist = song.SongArtist;
+        //    this.ImageFileName = song.ImageFileName;
+        //    IsProfileImage = false;
+        //    this.SongID = ++_globalCount;
+        //}
 
-        public static async Task<ICollection<Song>> GetSongs()
+        public static async Task<List<Song>> GetSongsAsync()
         {
             var songs = new List<Song>();
             var songList = await FileHelper.ReadTextFile(TEXT_FILE_NAME);
@@ -66,7 +66,7 @@ namespace MusicLibrary.Models
                     SongTitle = songParts[1],
                     SongArtist = songParts[2],
                     SongImage = songParts[3],
-                    AudioFile = songParts[4]
+                    AudioFileName = songParts[4]
                 };
                 songs.Add(newSong);
             }
@@ -75,7 +75,7 @@ namespace MusicLibrary.Models
 
         public static List<Song> FilterSongs(string searchSongTitle, ICollection<Song> songList)
         {
-            // songList = await Song.GetSongs();
+            // songList = await Song.GetSongsAsync();
             var results = new List<Song>();
             foreach (var songContentPresenter in songList)
             {
@@ -96,13 +96,13 @@ namespace MusicLibrary.Models
             string songLine = "";
             foreach (var song in songs)
             {
-                songLine = $"{song.SongID.ToString()}|{song.SongTitle}|{song.SongArtist}|{song.SongImage}";
+                songLine = $"{song.SongID.ToString()}|{song.SongTitle}|{song.SongArtist}|{song.SongImage}|{song.AudioFileName}";
                 songLines.Add(songLine);
             }
             await FileHelper.WriteTextFile(TEXT_FILE_NAME, songLines);
         }
 
-        public static async Task<ICollection<Song>> GetSongsAsync()
+        public static async Task<List<Song>> GetSongsAsyncKeep()
         {
             var songs = new List<Song>();
 
@@ -121,6 +121,13 @@ namespace MusicLibrary.Models
                 songs.Add(song);
             }
             return songs;
+        }
+
+        public static async void AddSong(Song songToAdd)
+        {
+            var songs = await GetSongsAsync();
+            songs.Add(songToAdd);
+            await WriteSongsToFile(songs);
         }
 
         public static async void WriteSong(Song song)
@@ -165,7 +172,7 @@ namespace MusicLibrary.Models
     //                SongTitle = songParts[1],
     //                SongArtist = songParts[2],
     //                SongImage = songParts[3],
-    //                AudioFile = songParts[4]
+    //                AudioFileName = songParts[4]
     //            };
     //            songs.Add(newSong);
     //        }

@@ -99,6 +99,9 @@
     <Compile Include="Controls\AddRemoveSong.xaml.cs">
       <DependentUpon>AddRemoveSong.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SearchResults.xaml.cs">
       <DependentUpon>SearchResults.xaml</DependentUpon>
     </Compile>
@@ -123,7 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\AbbeyRoadCover.png" />
-    <Content Include="Assets\Come Together.mp3" />
+    <Content Include="Assets\ComeTogether.mp3" />
     <Content Include="Assets\musicplayer.png" />
     <Content Include="Assets\musicplayer1.jpg" />
     <Content Include="Assets\SongsTextfile.txt" />
@@ -142,6 +145,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Controls\AddRemoveSong.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

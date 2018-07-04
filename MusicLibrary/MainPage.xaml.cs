@@ -37,13 +37,13 @@ namespace MusicLibrary
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-           await Song.CopyAllFromAssetToLocal();
-           base.OnNavigatedTo(e);
+            await Song.CopyAllFromAssetToLocal();
+            base.OnNavigatedTo(e);
           /*  Songs = await SongManager.ReadSongsFromFile();
 
             SongManager.WriteSongsToFile(Songs);*/
             //Songs = await SongManager.ReadSongsFromFile();
-            DataContext = await Song.GetSongs();
+            DataContext = await Song.GetSongsAsync();
         }
 
         private void SongsGrid_ItemClick(object sender, ItemClickEventArgs e)
@@ -53,7 +53,7 @@ namespace MusicLibrary
             this.SelectedSongTitle.Text = song.SongTitle;
             this.SelectedSongArtist.Text = song.SongArtist;
             this.SelectedSongImage.Source = image;
-            this.myMediaElement.Source = new Uri("ms-appx:///" + song.AudioFile, UriKind.RelativeOrAbsolute);
+            this.myMediaElement.Source = new Uri("ms-appx:///" + song.AudioFileName, UriKind.RelativeOrAbsolute);
         }
 
         private void AddRemove_Click(object sender, RoutedEventArgs e)

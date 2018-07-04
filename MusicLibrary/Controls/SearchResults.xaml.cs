@@ -32,7 +32,7 @@ namespace MusicLibrary.Controls
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            songs = await Song.GetSongs();
+            songs = await Song.GetSongsAsync();
         }
 
         private void SearchForSongs_Click(object sender, RoutedEventArgs e)
