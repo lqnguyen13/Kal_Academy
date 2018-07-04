@@ -1,4 +1,3 @@
 1|Come Together|The Beatles|Assets/AbbeyRoadCover.png|Assets/Come Together.mp3		 	
 2|DarkHorse|Britney Spherse|Assets/lata.jpg|Assets/Come Together.mp3	
 3|Bollywood|Latha Mangeshwar|Assets/katyperry.jpg|Assets/Come Together.mp3	
-4|All You Need Is Love|The Beatles|Assets/All You Need Is Love_album.png|Assets/All You Need Is Love.mp3		

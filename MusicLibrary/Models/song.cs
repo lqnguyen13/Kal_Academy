@@ -73,20 +73,16 @@ namespace MusicLibrary.Models
             return songs;
         }
 
-        public static List<Song> FilterSongs(string searchSong, ICollection<Song> songList)
+        public static List<Song> FilterSongs(string searchSongTitle, ICollection<Song> songList)
         {
             // songList = await Song.GetSongs();
             var results = new List<Song>();
             foreach (var songContentPresenter in songList)
             {
-                var songTitle = songContentPresenter.SongTitle.ToLower();
-                var songArtist = songContentPresenter.SongArtist.ToLower();
+                var songTitle = songContentPresenter.SongTitle;
+                var st = songTitle.ToLower();
 
-                if (songTitle.Contains(searchSong))
-                {
-                    results.Add(songContentPresenter);
-                }
-                else if (songArtist.Contains(searchSong))
+                if (st.Contains(searchSongTitle))
                 {
                     results.Add(songContentPresenter);
                 }
