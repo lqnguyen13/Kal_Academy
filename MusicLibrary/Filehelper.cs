@@ -31,7 +31,7 @@ namespace MusicLibrary
             return contents;
         }
 
-        public static async Task<string> WriteTextFileSongs(string filename, string contents)
+        public static async Task<string> WriteTextFile(string filename, string contents)
         {
 
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;

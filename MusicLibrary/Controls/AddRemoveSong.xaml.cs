@@ -45,7 +45,7 @@ namespace MusicLibrary.Controls
 
         private void addSong_Click(object sender, RoutedEventArgs e)
         {
-            //string textFilePath = await FileHelper.WriteTextFileSongs(TEXT_FILE_NAME, textBox.Text);
+            //string textFilePath = await FileHelper.WriteTextFile(TEXT_FILE_NAME, textBox.Text);
             var song = new Song
             {
                 SongTitle = songTitle.Text,

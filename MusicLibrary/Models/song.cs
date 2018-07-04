@@ -133,7 +133,7 @@ namespace MusicLibrary.Models
         public static async void WriteSong(Song song)
         {
             var songData = $"{song.SongTitle}, {song.SongArtist}";
-            await FileHelper.WriteTextFileSongs(TEXT_FILE_NAME, songData);
+            await FileHelper.WriteTextFile(TEXT_FILE_NAME, songData);
         }
 
         public static async Task CopyAllFromAssetToLocal()

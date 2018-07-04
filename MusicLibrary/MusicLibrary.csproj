@@ -128,8 +128,6 @@
     <Content Include="Assets\AbbeyRoadCover.png" />
     <Content Include="Assets\All You Need Is Love.mp3" />
     <Content Include="Assets\All You Need Is Love_album.png" />
-    <Content Include="Assets\Bohemian Rhapsody.mp3" />
-    <Content Include="Assets\bohemian_rhapsody_album.png" />
     <Content Include="Assets\ComeTogether.mp3" />
     <Content Include="Assets\Fearless_album.png" />
     <Content Include="Assets\Imagine.mp3" />
