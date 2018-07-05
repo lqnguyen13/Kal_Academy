@@ -39,11 +39,22 @@ namespace MusicLibrary
         {
             await Song.CopyAllFromAssetToLocal();
             base.OnNavigatedTo(e);
-          /*  Songs = await SongManager.ReadSongsFromFile();
-
-            SongManager.WriteSongsToFile(Songs);*/
+            /*  Songs = await SongManager.ReadSongsFromFile();
+              SongManager.WriteSongsToFile(Songs);*/
             //Songs = await SongManager.ReadSongsFromFile();
+            var user = e.Parameter as User;
+            string userName = (string)e.Parameter;
+            UpdateGreeting(userName);
             DataContext = await Song.GetSongsAsync();
+        }
+
+        public void UpdateGreeting(string name)
+        {
+            var now = DateTime.Now;
+            var greeting = 
+                now.Hour < 12 ? "Good morining" : now.Hour < 18 ? "Good afternoon" : "Good night";
+            var user = (string.IsNullOrEmpty(name) || name == User.GetGuestUser().UserName) ? "!" : $", {name}!";
+            welcomeUser.Text = $"{greeting}{user}";
         }
 
         private void SongsGrid_ItemClick(object sender, ItemClickEventArgs e)

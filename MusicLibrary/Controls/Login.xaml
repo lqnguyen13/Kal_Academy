@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<Page
     x:Class="MusicLibrary.Controls.Login"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,47 +9,47 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-            <Grid.RowDefinitions>
+        <Grid.RowDefinitions>
 
-                <RowDefinition Height="0.15*" />
+            <RowDefinition Height="0.15*" />
 
-                <RowDefinition Height="0.85*" />
+            <RowDefinition Height="0.85*" />
 
-            </Grid.RowDefinitions>
+        </Grid.RowDefinitions>
 
-            <Border Grid.Row="0" Background="LightBlue">
+        <Border Grid.Row="0" Background="LightBlue">
 
-                <TextBlock Name="LoginText" Text="Login Form"  
+            <TextBlock Name="LoginText" Text="Login Form"  
             TextAlignment="Center" FontSize="30" FontStyle="Italic"  
             FontWeight="ExtraBlack"></TextBlock>
 
-            </Border>
+        </Border>
 
-            <StackPanel x:Name="stackone" Grid.Row="1">
+        <StackPanel x:Name="stackone" Grid.Row="1">
 
-                <TextBox PlaceholderText="Enter Email" Width="300"  
+            <TextBox Name="nameText" PlaceholderText="Enter Name" Width="300"  
             Margin="0,50,0,0" Text=""></TextBox>
 
-                <TextBox PlaceholderText="Enter Password"  
+            <TextBox PlaceholderText="Enter Password"  
             Width="300" Margin="0,10,0,0"></TextBox>
 
-                <RelativePanel HorizontalAlignment="Center"  
+            <RelativePanel HorizontalAlignment="Center"  
             Margin="0,10,0,0">
 
-                    <Button x:Name="loginbtn" Content="Login"  
+                <Button x:Name="loginbtn" Content="Login"  
                 Height="35" Width="65" Click="loginbtn_Click"></Button>
 
-                    <Button x:Name="cancelbtn" Content="Cancel"  
+                <Button x:Name="cancelbtn" Content="Guest"  
                 Height="35" Width="65" Margin="10,0,0,0"  
                 RelativePanel.RightOf="loginbtn" Click="cancelbtn_Click"></Button>
 
-                </RelativePanel>
+            </RelativePanel>
 
-            </StackPanel>
+        </StackPanel>
 
-        </Grid>
+    </Grid>
 
-        
-</UserControl>
+
+</Page>

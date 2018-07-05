@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MusicLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,24 +18,27 @@ using Windows.UI.Xaml.Navigation;
 
 namespace MusicLibrary.Controls
 {
-    public sealed partial class Login : UserControl
+    public sealed partial class Login : Page
     {
         public Login()
         {
             this.InitializeComponent();
-
         }
 
         private void loginbtn_Click(object sender, RoutedEventArgs e)
         {
-
+            var user = User.GetUser(this.nameText.Text);
+            this.DataContext = user;
+            this.Frame.Navigate(typeof(MainPage), user);
         }
 
         private void cancelbtn_Click(object sender, RoutedEventArgs e)
         {
+            /* var user = User.GetGuestUser();
+             this.nameText.Text = user.UserName;*/
+            this.Frame.Navigate(typeof(MainPage));//, user);
 
-
-
+            //MainPage. UpdateGreeting(user.UserName);
         }
     }
 }

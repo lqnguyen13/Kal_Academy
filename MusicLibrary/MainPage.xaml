@@ -40,7 +40,7 @@
                     </Grid>
                 </StackPanel>
 
-                
+
                 <StackPanel x:Name="RightPanel"   Orientation="Vertical" Margin="0,82,0,0" HorizontalAlignment="Left" Height="600" VerticalAlignment="Top" Width="386">
                     <TextBlock x:Name="SongSelectedBlock" FontSize="48"><Run Text="Song Selected"/></TextBlock>
                     <StackPanel x:Name="SelectedSongPanel" Margin="0,20,0,0">
@@ -68,6 +68,7 @@
                     <StackPanel x:Name="SearchPanel" Orientation="Horizontal">
                         <Button x:Name="SearchButton" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Center" Height="50" FontSize="24" Margin="20,0,0,0" Click="SearchButton_Click"/>
                     </StackPanel>
+                    <TextBlock Margin="220,0,0,0" Name="welcomeUser" HorizontalAlignment="Right" FontSize="30" Text="Welcome!" TextWrapping="Wrap" VerticalAlignment="Center"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

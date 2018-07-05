@@ -25,6 +25,11 @@ namespace MusicLibrary.Models
             return user;
         }
 
+        public static string GetUser(string user)
+        {
+            return user;
+        }
+
         // type of interface using Icollection
         public async static Task<ICollection<User>> GetUsers()
         {
