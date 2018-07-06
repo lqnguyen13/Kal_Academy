@@ -10,45 +10,58 @@
     Background="{ThemeResource AppBarBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock x:Name="SongListBlock" FontSize="48" Margin="200,40,0,0"><Run Text="Add or Remove Song"/></TextBlock>
-        <Button x:Name = "readFile" Content = "Remove Song From Playlist"  
-         HorizontalAlignment = "Left" Margin = "62,518,0,0"  
-         VerticalAlignment = "Top" Height = "37" Width = "200"  
-         Click = "readFile_Click"/>
-
-        <TextBox x:FieldModifier = "public" x:Name = "textBox"  
-         HorizontalAlignment = "Left" Margin = "58,145,0,0" TextWrapping = "Wrap"  
-         VerticalAlignment = "Top" Height = "276" Width = "245"/>
-
-        <Button x:Name = "addSong" Content = "Add Song To Playlist"
-         HorizontalAlignment = "Left" Margin = "64,459,0,0"  
-         VerticalAlignment = "Top" Click = "addSong_Click"/>
-
-        <TextBlock x:Name = "textBlock" HorizontalAlignment = "Left"  
-         Margin = "386,149,0,0" TextWrapping = "Wrap"  
-         VerticalAlignment = "Top" Height = "266" Width = "250"  
-         Foreground = "#FF6231CD"/>
-        <Button x:Name = "backToPlayList" Content = "Go Back To Playlist"
-         HorizontalAlignment = "Left" Margin = "64,580,0,0"  
-         VerticalAlignment = "Top" Click = "backToPlayList_Click"/>
-        <StackPanel x:Name="ARPanel" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Width="1000" Margin="250,20,0,0">
+        <StackPanel Margin="0,50,0,0" Orientation="Vertical">
+            <TextBlock x:Name="SongListBlock" FontSize="48" Text="Edit Song Library" Margin="20,0,0,0"/>
             <StackPanel Orientation="Horizontal">
-                <StackPanel x:Name="AddRemovePanel" Orientation="Vertical">
-                    <TextBox x:Name="songTitle" Text="{Binding SongTitle, Mode=TwoWay}" HorizontalAlignment="Left" PlaceholderText="Enter Song Title" VerticalAlignment="Top" Width="400" Height="50" FontSize="20" Margin="150,0,0,0"/>
-                    <TextBox x:Name="songArtist" Text="{Binding SongArtist, Mode=TwoWay}" HorizontalAlignment="Left" PlaceholderText="Enter Song Artist" VerticalAlignment="Top" Width="400" Height="50" FontSize="20" Margin="150,20,0,0"/>
+                <StackPanel x:Name="RemoveSongPanel" Orientation="Vertical" Height="600" Width="500" HorizontalAlignment="Left" Margin="20,20,10,0">
+                    <TextBlock x:Name="CurrentLibrary" FontSize="30" Text="Current Library "/>
+                    <StackPanel Orientation="Horizontal" Margin="2">
+                        <TextBlock Text="TITLE" FontSize="20" Width="300" Margin="2"/>
+                        <TextBlock Text="ARTIST" FontSize="20" Width="300" Margin="2"/>
+                    </StackPanel>
+                    <GridView x:Name="CurrentSongsList" ItemsSource="{Binding}" Height="300" Width="500" HorizontalAlignment="Left" Margin="0,10,0,10">
+                        <GridView.ItemTemplate>
+                            <DataTemplate x:DataType="local1:Song">
+                                <StackPanel Orientation="Horizontal" Margin="2">
+                                    <TextBlock Text="{x:Bind SongTitle}" Width="300" Margin="2"></TextBlock>
+                                    <TextBlock Text="{x:Bind SongArtist}" Width="300" Margin="2" x:Phase="1"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                    <Button x:Name = "readFile" Content = "Remove Song From Playlist" HorizontalAlignment = "Left" VerticalAlignment = "Top" Height = "37" Width = "200" Click = "readFile_Click"/>
+                    <TextBlock x:Name = "textBlock" HorizontalAlignment = "Left" TextWrapping = "Wrap" VerticalAlignment = "Top" Height = "200" Width = "300" Foreground = "#FF6231CD"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Height="600" Width="500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,20,0,0">
+                    <TextBlock x:Name="AddSong" FontSize="30" Text="Add a Song" Margin="20,0,0,0"/>
+                    <StackPanel x:Name="AddSongPanel" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Width="500" Margin="20,10,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel x:Name="AddRemovePanel" Orientation="Vertical">
+                                <TextBox x:Name="songTitle" Text="{Binding SongTitle, Mode=TwoWay}" HorizontalAlignment="Left" PlaceholderText="Enter Song Title" VerticalAlignment="Top" Width="400" Height="50" FontSize="20" Margin="0,10,0,10"/>
+                                <TextBox x:Name="songArtist" Text="{Binding SongArtist, Mode=TwoWay}" HorizontalAlignment="Left" PlaceholderText="Enter Song Artist" VerticalAlignment="Top" Width="400" Height="50" FontSize="20" Margin="0,10,0,10"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                    <Button x:Name = "addSong" Content = "Add Song To Playlist" HorizontalAlignment = "Left" VerticalAlignment = "Top" Click = "addSong_Click" Margin="20,10,0,0"/>
+                    <TextBlock x:Name="AddMessage" FontSize="24" Margin="20,10,0,10"></TextBlock>
                 </StackPanel>
             </StackPanel>
+            <Button x:Name = "backToPlayList" Content = "Go Back To Playlist" HorizontalAlignment = "Left" VerticalAlignment = "Top" Click = "backToPlayList_Click" Margin="20,0,0,0"/>
         </StackPanel>
+        
+        
 
-        <GridView Name="Songs" ItemsSource="{Binding}" Height="300" Width="500" Margin="550, 0,0,0">
-            <GridView.ItemTemplate>
-                <DataTemplate x:DataType="local1:Song">
-                    <StackPanel Orientation="Horizontal" Margin="2">
-                        <TextBlock Text="{x:Bind SongTitle}" Width="95" Margin="2"></TextBlock>
-                        <TextBlock Text="{x:Bind SongArtist}" Width="95" Margin="2" x:Phase="1"></TextBlock>
-                    </StackPanel>
-                </DataTemplate>
-            </GridView.ItemTemplate>
-        </GridView>
+        <!--<TextBox x:FieldModifier = "public" x:Name = "textBox"  
+         HorizontalAlignment = "Left" Margin = "58,145,0,0" TextWrapping = "Wrap"  
+         VerticalAlignment = "Top" Height = "276" Width = "245"/>-->
+
+        
+
+
+        
+        
+
+
     </Grid>
 </Page>

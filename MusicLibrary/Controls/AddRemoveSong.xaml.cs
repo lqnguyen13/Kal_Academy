@@ -55,6 +55,7 @@ namespace MusicLibrary.Controls
                 AudioFileName = "N/A"
             };
             Song.AddSong(song);
+            AddMessage.Text = "New song was successfully added!";
         }
 
         private void backToPlayList_Click(object sender, RoutedEventArgs e)

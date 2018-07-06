@@ -51,8 +51,9 @@ namespace MusicLibrary
             {
                 userName = string.IsNullOrEmpty("") ? string.Empty : user.UserName;
             }
-            UpdateGreeting(userName);          
-            this.DataContext = user;
+            UpdateGreeting(userName);
+            //this.DataContext = user;
+            DataContext = await Song.GetSongsAsync();
         }
 
         public void UpdateGreeting(string name)
