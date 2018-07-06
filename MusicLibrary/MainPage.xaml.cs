@@ -25,11 +25,10 @@ namespace MusicLibrary
     /// </summary>
     public sealed partial class MainPage : Page
     {
-
+        User user;
         //private List<Song> Songs;
 
         //public int Assets { get; private set; }
-
         public MainPage()
         {
             this.InitializeComponent();
@@ -42,10 +41,18 @@ namespace MusicLibrary
             /*  Songs = await SongManager.ReadSongsFromFile();
               SongManager.WriteSongsToFile(Songs);*/
             //Songs = await SongManager.ReadSongsFromFile();
-            var user = e.Parameter as User;
-            string userName = (string)e.Parameter;
-            UpdateGreeting(userName);
-            DataContext = await Song.GetSongsAsync();
+            user = e.Parameter as User;
+            string userName;
+            if (!string.IsNullOrEmpty((string)e.Parameter))
+            {
+                userName = (string)e.Parameter;
+            }
+            else
+            {
+                userName = string.IsNullOrEmpty("") ? string.Empty : user.UserName;
+            }
+            UpdateGreeting(userName);          
+            this.DataContext = user;
         }
 
         public void UpdateGreeting(string name)
@@ -53,7 +60,7 @@ namespace MusicLibrary
             var now = DateTime.Now;
             var greeting = 
                 now.Hour < 12 ? "Good morining" : now.Hour < 18 ? "Good afternoon" : "Good night";
-            var user = (string.IsNullOrEmpty(name) || name == User.GetGuestUser().UserName) ? "!" : $", {name}!";
+            var user = string.IsNullOrEmpty(name) ? "!" : $", {name}!";
             welcomeUser.Text = $"{greeting}{user}";
         }
 
