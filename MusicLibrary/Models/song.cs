@@ -82,7 +82,7 @@ namespace MusicLibrary.Models
                 var st = song.SongTitle.ToLower();
                 var sa = song.SongArtist.ToLower();
 
-                if (st.Contains(searchTerm) || sa.Contains(searchTerm))
+                if (st.Contains(searchTerm.ToLower()) || sa.Contains(searchTerm.ToLower()))
                 {
                     results.Add(song);
                 }
