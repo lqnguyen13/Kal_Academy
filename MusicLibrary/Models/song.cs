@@ -146,7 +146,7 @@ namespace MusicLibrary.Models
 
             foreach (var song in songs.ToList())
             {
-                if (song.SongTitle == songToRemove.SongTitle)
+                if (song.SongID == songToRemove.SongID)
                 {
                     songs.Remove(song);
                 }

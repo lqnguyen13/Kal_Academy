@@ -55,8 +55,16 @@ namespace MusicLibrary.Controls
 
         private async void removeSong_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = await Song.RemoveSongAsync(selectedSong);
-            RemoveMessage.Text = selectedSong.SongTitle + " has been successfully removed!";
+            try
+            {
+                DataContext = await Song.RemoveSongAsync(selectedSong);
+                RemoveMessage.Text = selectedSong.SongTitle + " has been successfully removed!";
+            }
+            catch 
+            {
+                RemoveMessage.Text = "No song selected!";
+            }
+            
         }
 
         private void CurrentSongsList_ItemClick(object sender, ItemClickEventArgs e)
