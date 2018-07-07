@@ -10,7 +10,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <StackPanel>
+        <StackPanel Background="Beige">
             <StackPanel Orientation="Vertical" Margin="0,50,0,0">
                 <TextBlock FontSize="48" Margin="20,0,0,0">Search Page</TextBlock>
                 <StackPanel x:Name="BottomPanel" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,30,0,30">

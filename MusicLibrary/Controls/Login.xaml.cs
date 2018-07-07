@@ -26,6 +26,11 @@ namespace MusicLibrary.Controls
             this.InitializeComponent();
         }
 
+        private void RegisterButtonTextBlock_OnPointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MainPage));
+        }
+
         private void loginbtn_Click(object sender, RoutedEventArgs e)
         {
             user = User.GetUser(this.nameText.Text);
@@ -33,13 +38,13 @@ namespace MusicLibrary.Controls
             this.Frame.Navigate(typeof(MainPage), user);
         }
 
-        private void cancelbtn_Click(object sender, RoutedEventArgs e)
-        {
-             var user = User.GetGuestUser();
-             this.nameText.Text = user.UserName;
-            this.Frame.Navigate(typeof(MainPage), user);
+        //private void cancelbtn_Click(object sender, RoutedEventArgs e)
+        //{
+        //    // var user = User.GetGuestUser();
+        //    //  this.nameText.Text = user.UserName;
+        //    //, user);
 
-            //MainPage. UpdateGreeting(user.UserName);
-        }
+        //    //MainPage. UpdateGreeting(user.UserName);
+        //}
     }
 }

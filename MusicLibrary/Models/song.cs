@@ -13,7 +13,7 @@ namespace MusicLibrary.Models
     public class Song : BindableBase
     {
         const string TEXT_FILE_NAME = "SongsTextfile.txt";
-        private static int _globalCount = 3;
+       // private static int _globalCount = 3;
         public int SongID { get; set; }
         public string SongTitle { get; set; }
         public string SongArtist { get; set; }

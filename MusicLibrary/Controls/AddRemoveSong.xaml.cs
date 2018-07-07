@@ -24,7 +24,7 @@ namespace MusicLibrary.Controls
     public sealed partial class AddRemoveSong : Page
     {
         const string TEXT_FILE_NAME = "SongsTextfile.txt";
-        private ICollection<Song> songList;
+       // private ICollection<Song> songList;
 
         public AddRemoveSong()
         {
