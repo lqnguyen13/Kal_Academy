@@ -89,17 +89,8 @@ namespace MusicLibrary
 
             foreach (var file in fileList)
             {
-                StorageFile assetFile = await assetFolder.GetFileAsync(file.Name);
                 StorageFile localFile = await localFolder.CreateFileAsync(file.Name, CreationCollisionOption.OpenIfExists);
-
-                if (localFile.IsAvailable)
-                {
-                    // do nothing
-                }
-                else
-                {
-                    await assetFile.CopyAsync(localFolder);
-                }
+                await file.CopyAsync(localFolder , file.Name,  NameCollisionOption.FailIfExists);
             }
         }
 
