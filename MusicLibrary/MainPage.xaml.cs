@@ -25,7 +25,7 @@ namespace MusicLibrary
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        User user;
+        
         //private List<Song> Songs;
 
         //public int Assets { get; private set; }
@@ -38,21 +38,8 @@ namespace MusicLibrary
         {
             await Song.CopyAllFromAssetToLocal();
             base.OnNavigatedTo(e);
-            /*  Songs = await SongManager.ReadSongsFromFile();
-              SongManager.WriteSongsToFile(Songs);*/
-            //Songs = await SongManager.ReadSongsFromFile();
-            user = e.Parameter as User;
-            string userName;
-            if (!string.IsNullOrEmpty((string)e.Parameter))
-            {
-                userName = (string)e.Parameter;
-            }
-            else
-            {
-                userName = string.IsNullOrEmpty("") ? $"{User.GetGuestUser().UserName}" : user.UserName;
-            }
-            UpdateGreeting(userName);
-            //this.DataContext = user;
+            var users = await User.GetUsers();           
+            UpdateGreeting(users.First().UserName);
             DataContext = await Song.GetSongsAsync();
         }
 

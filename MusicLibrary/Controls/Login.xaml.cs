@@ -20,21 +20,28 @@ namespace MusicLibrary.Controls
 {
     public sealed partial class Login : Page
     {
-        string user;
+        private List<User> users;
         public Login()
         {
             this.InitializeComponent();
         }
 
-        private void RegisterButtonTextBlock_OnPointerPressed(object sender, PointerRoutedEventArgs e)
+        private async void RegisterButtonTextBlock_OnPointerPressed(object sender, PointerRoutedEventArgs e)
         {
+            var user = User.GetGuestUser();
+            await User.WriteUsersToFile(user.UserName);
             this.Frame.Navigate(typeof(MainPage));
         }
 
-        private void loginbtn_Click(object sender, RoutedEventArgs e)
+        private async void loginbtn_Click(object sender, RoutedEventArgs e)
         {
-            user = User.GetUser(this.nameText.Text);
-            this.DataContext = user;
+            var user = new User
+            {
+                UserName = this.nameText.Text
+            };
+            //users.Add(user);
+            await User.WriteUsersToFile(user.UserName);
+          //  this.DataContext = user;
             this.Frame.Navigate(typeof(MainPage), user);
         }
 

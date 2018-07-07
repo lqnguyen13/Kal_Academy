@@ -14,6 +14,11 @@ namespace MusicLibrary.Models
         public string UserName { get; set; }
         public string Password { get; set; }
         public BitmapImage UserImage { get; set; }
+
+        public User()
+        {
+
+        }
         
         public static User GetGuestUser()
         {
@@ -22,11 +27,6 @@ namespace MusicLibrary.Models
                 UserName = "Guest",
                 UserImage = null
             };
-            return user;
-        }
-
-        public static string GetUser(string user)
-        {
             return user;
         }
 
@@ -44,12 +44,24 @@ namespace MusicLibrary.Models
                var userData = line.Split(',');
                 var user = new User
                 {
-                    UserName = userData[0],
-                    Password = userData[1]
+                    UserName = userData[0]
                 };
                 users.Add(user);
             }
             return users;
+        }
+
+        public static async Task WriteUsersToFile(string userName)
+        {
+            var userLines = new List<string>();
+            string userLine = $"{userName}";
+            userLines.Add(userLine);
+            //foreach (var user in users)
+            //{
+            //    userLine = $"{user.UserName}";
+            //    userLines.Add(userLine);
+            //}
+            await FileHelper.WriteTextFile(USERS_TEXT_FILE_NAME, userLines);
         }
     }
 }
