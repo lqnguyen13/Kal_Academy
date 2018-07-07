@@ -13,7 +13,7 @@ namespace MusicLibrary.Models
     public class Song : BindableBase
     {
         const string TEXT_FILE_NAME = "SongsTextfile.txt";
-       // private static int _globalCount = 3;
+        // private static int _globalCount = 3;
         public int SongID { get; set; }
         public string SongTitle { get; set; }
         public string SongArtist { get; set; }
@@ -123,17 +123,37 @@ namespace MusicLibrary.Models
             return songs;
         }
 
-        public static async void AddSong(Song songToAdd)
+        public static async Task<List<Song>> AddSongAsync(Song songToAdd)
         {
             var songs = await GetSongsAsync();
+            var lastID = songs[songs.Count - 1].SongID;
+            songToAdd.SongID = lastID + 1;
             songs.Add(songToAdd);
             await WriteSongsToFile(songs);
+            var newSongs = await GetSongsAsync();
+            return newSongs;
         }
 
         public static async void WriteSong(Song song)
         {
             var songData = $"{song.SongTitle}, {song.SongArtist}";
             await FileHelper.WriteTextFile(TEXT_FILE_NAME, songData);
+        }
+
+        public static async Task<List<Song>> RemoveSongAsync(Song songToRemove)
+        {
+            var songs = await GetSongsAsync();
+
+            foreach (var song in songs.ToList())
+            {
+                if (song.SongTitle == songToRemove.SongTitle)
+                {
+                    songs.Remove(song);
+                }
+            }
+            await WriteSongsToFile(songs);
+            var newSongs = await GetSongsAsync();
+            return newSongs;
         }
 
         public static async Task CopyAllFromAssetToLocal()

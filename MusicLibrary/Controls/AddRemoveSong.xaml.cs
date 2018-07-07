@@ -24,7 +24,8 @@ namespace MusicLibrary.Controls
     public sealed partial class AddRemoveSong : Page
     {
         const string TEXT_FILE_NAME = "SongsTextfile.txt";
-       // private ICollection<Song> songList;
+        private Song selectedSong;
+        private ICollection<Song> songList;
 
         public AddRemoveSong()
         {
@@ -37,13 +38,7 @@ namespace MusicLibrary.Controls
             this.DataContext = await Song.GetSongsAsync();
         }
 
-        private async void readFile_Click(object sender, RoutedEventArgs e)
-        {
-            string str = await FileHelper.ReadTextFileSongs(TEXT_FILE_NAME);
-            textBlock.Text = str;
-        }
-
-        private void addSong_Click(object sender, RoutedEventArgs e)
+        private async void addSong_Click(object sender, RoutedEventArgs e)
         {
             //string textFilePath = await FileHelper.WriteTextFile(TEXT_FILE_NAME, textBox.Text);
             var song = new Song
@@ -54,13 +49,25 @@ namespace MusicLibrary.Controls
                 SongImage = "N/A",
                 AudioFileName = "N/A"
             };
-            Song.AddSong(song);
-            AddMessage.Text = "New song was successfully added!";
+            DataContext = await Song.AddSongAsync(song);
+            AddMessage.Text = "New song " + song.SongTitle + " was successfully added!";
+        }
+
+        private async void removeSong_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = await Song.RemoveSongAsync(selectedSong);
+            RemoveMessage.Text = selectedSong.SongTitle + " has been successfully removed!";
+        }
+
+        private void CurrentSongsList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            selectedSong = (Song)e.ClickedItem;
         }
 
         private void backToPlayList_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(MainPage));
         }
+
     }
 }
