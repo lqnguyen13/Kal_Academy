@@ -47,7 +47,7 @@ namespace MusicLibrary
         {
             var now = DateTime.Now;
             var greeting = 
-                now.Hour < 12 ? "Good morining" : now.Hour < 18 ? "Good afternoon" : "Good night";
+                now.Hour < 12 ? "Good morning" : now.Hour < 18 ? "Good afternoon" : "Good night";
             var user = string.IsNullOrEmpty(name) ? "!" : $", {name}!";
             welcomeUser.Text = $"{greeting}{user}";
         }
