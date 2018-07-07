@@ -49,7 +49,7 @@ namespace MusicLibrary
             }
             else
             {
-                userName = string.IsNullOrEmpty("") ? string.Empty : user.UserName;
+                userName = string.IsNullOrEmpty("") ? $"{User.GetGuestUser().UserName}" : user.UserName;
             }
             UpdateGreeting(userName);
             //this.DataContext = user;

@@ -9,7 +9,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid x:Name="Mysong" Height="300" Width="400" CornerRadius="8">
+    <Grid x:Name="Mysong" Height="300" Width="400" CornerRadius="8" Background="Beige">
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin = "20, 0, 50, 240">
                 <Button x:Name="buttonClose"  Content="&#x2716;"   HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Symbol" FontSize="18.667" RenderTransformOrigin="0,0" Height="36" Background="#00F6E8BF" />

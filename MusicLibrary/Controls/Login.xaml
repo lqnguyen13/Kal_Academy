@@ -9,44 +9,31 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid  Background="Beige">
 
-        <Grid.RowDefinitions>
-
-            <RowDefinition Height="0.15*" />
-
-            <RowDefinition Height="0.85*" />
-
-        </Grid.RowDefinitions>
-
-        <Border Grid.Row="0" Background="LightBlue">
-
-            <TextBlock Name="LoginText" Text="Login Form"  
-            TextAlignment="Center" FontSize="30" FontStyle="Italic"  
-            FontWeight="ExtraBlack"></TextBlock>
-
-        </Border>
-
-        <StackPanel x:Name="stackone" Grid.Row="1">
-
-            <TextBox Name="nameText" PlaceholderText="Enter Name" Width="300"  
-            Margin="0,50,0,0" Text=""></TextBox>
-
-            <TextBox PlaceholderText="Enter Password"  
-            Width="300" Margin="0,10,0,0"></TextBox>
-
-            <RelativePanel HorizontalAlignment="Center"  
-            Margin="0,10,0,0">
-
-                <Button x:Name="loginbtn" Content="Login"  
-                Height="35" Width="65" Click="loginbtn_Click"></Button>
-
-                <Button x:Name="cancelbtn" Content="Guest"  
-                Height="35" Width="65" Margin="10,0,0,0"  
-                RelativePanel.RightOf="loginbtn" Click="cancelbtn_Click"></Button>
-
-            </RelativePanel>
-
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="Login" FontSize="36" Margin="4" TextAlignment="Center"/>
+            <TextBlock x:Name="ErrorMessage" Text="" FontSize="20" Margin="4" Foreground="Red" TextAlignment="Center"/>
+            <TextBlock Text="Enter your username below" Margin="0,0,0,20"
+               TextWrapping="Wrap" Width="300" 
+               TextAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
+            <TextBox x:Name="nameText" Margin="4" Width="250"/>
+            <Button x:Name="PassportSignInButton" Content="Login" Background="DodgerBlue" Foreground="White"
+        Click="loginbtn_Click" Width="80" HorizontalAlignment="Center" Margin="0,20"/>
+            
+            <TextBlock Text="Don't have an account?"
+                TextAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
+            <TextBlock x:Name="RegisterButtonTextBlock" Text="Sign in as guest"
+               PointerPressed="RegisterButtonTextBlock_OnPointerPressed"
+               Foreground="DodgerBlue"
+               TextAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
+            <Border x:Name="PassportStatus" Background="DodgerBlue"
+               Margin="0,20" Height="100" >
+                <TextBlock x:Name="PassportStatusText" Text="Music App is ready to use!"
+             Margin="4" TextAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+            </Border>
+            <TextBlock x:Name="LoginExplaination" FontSize="24" TextAlignment="Center" TextWrapping="Wrap" 
+        Text="Please login, validation will only occur using the default username"/>
         </StackPanel>
 
     </Grid>
