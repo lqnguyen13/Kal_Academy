@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -8,9 +9,11 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace MusicLibrary.Models
 {
-    class User
+    [DataContract]
+    public class User : BindableBase
     {
         const string USERS_TEXT_FILE_NAME = "UsersTextFile.txt";
+        [DataMember]
         public string UserName { get; set; }
         public string Password { get; set; }
         public BitmapImage UserImage { get; set; }

@@ -63,7 +63,27 @@ namespace MusicLibrary.Controls
         }
         public Song songs { get; set; }
 
-       
+        
+
+        public int CountSongs(User user)
+        {
+            // Each child control is a ContentPresenter that's wrapping a Note control.
+            var children = Children;
+            int count = 0;
+
+            foreach (var noteContentPresenter in children)
+            {
+                SongControl n = GetVisualChild<SongControl>(noteContentPresenter);
+                Song sn = n.DataContext as Song;
+                CompositeTransform ct = n.RenderTransform as CompositeTransform;
+
+                if (sn.SongTitle == user.UserName)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
 
         /*public Song AddSong(Song song)
         {

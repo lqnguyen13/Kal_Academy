@@ -72,6 +72,15 @@
                 </StackPanel>
             </StackPanel>
         </StackPanel>
+        <!--<local2:SongPanel
+                x:Name="taskPanel"
+                Grid.Row="0"
+                Grid.RowSpan="3"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                ItemsSource="{x:Bind FamilyModel.SongCollection}"
+                Margin="0,8,8,30"></local2:SongPanel>-->
+        <MediaElement x:Name="_media" AutoPlay="True"/>
     </Grid>
 
     <!--<Grid>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="en-us" Name="MusicLibraryCommandSet_en-us">
+    <AppName>Music Library</AppName>
+    <Example>Play Song Name</Example>
+
+    <Command Name="playSong">
+      <Example>Play Song Name</Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> add [song] to [play] </ListenFor>
+      <ListenFor RequireAppName="ExplicitlySpecified"> add [song] {builtin:AppName} song</ListenFor>
+      <Feedback> Opening MusicLibrary to play song </Feedback>
+      <Navigate/>
+    </Command>
+    <Command Name="pauseSong">
+      <Example>Play Song Name</Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> current [song] to [pause] </ListenFor>
+      <ListenFor RequireAppName="ExplicitlySpecified"> current [song] {builtin:AppName} song</ListenFor>
+      <Feedback> Opening MusicLibrary to pause current song </Feedback>
+      <Navigate/>
+    </Command>
+    <Command Name="stopSong">
+      <Example>Play Song Name</Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> current [song] to [stop] </ListenFor>
+      <ListenFor RequireAppName="ExplicitlySpecified"> current [song] {builtin:AppName} song</ListenFor>
+      <Feedback> Opening MusicLibrary to stop current song </Feedback>
+      <Navigate/>
+    </Command>
+  </CommandSet>
+</VoiceCommands>

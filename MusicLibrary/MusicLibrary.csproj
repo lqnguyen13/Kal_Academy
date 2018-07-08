@@ -109,6 +109,7 @@
       <DependentUpon>SongControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SongCanvas.cs" />
+    <Compile Include="Controls\SongPanel.cs" />
     <Compile Include="FileHelper.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -117,6 +118,12 @@
     <Compile Include="Models\Song.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Speech\CommandVerb.cs" />
+    <Compile Include="Speech\PhraseRecognizedEventArgs.cs" />
+    <Compile Include="Speech\SpeechManager.cs" />
+    <Compile Include="Speech\SpeechRecognitionMode.cs" />
+    <Compile Include="Speech\StateChangedEventArgs.cs" />
+    <Compile Include="VoiceCommandObjects\VoiceCommands.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -146,6 +153,7 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="VoiceCommandObjects\VoiceCommands.xml" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

@@ -15,6 +15,10 @@ using Windows.UI.Xaml.Navigation;
 using MusicLibrary.Models;
 using Windows.UI.Xaml.Media.Imaging;
 using MusicLibrary.Controls;
+using MusicLibrary.Speech;
+using Windows.UI.Core;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -36,21 +40,69 @@ namespace MusicLibrary
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            await Song.CopyAllFromAssetToLocal();
+            // Perform initialization for speech recognition.
+            _speechManager = new SpeechManager(FamilyModel);
+            _speechManager.PhraseRecognized += speechManager_PhraseRecognized;
+            _speechManager.StateChanged += speechManager_StateChanged;
+            await _speechManager.StartContinuousRecognition();
+
+            // await Song.CopyAllFromAssetToLocal();
             base.OnNavigatedTo(e);
             var users = await User.GetUsers();           
-            UpdateGreeting(users.First().UserName);
+            UpdateGreetingAsync(users.First().UserName);
             DataContext = await Song.GetSongsAsync();
+
+            _pageParameters = e.Parameter as VoiceCommandObjects.VoiceCommand;
+            if (_pageParameters != null)
+            {
+                switch (_pageParameters.VoiceCommandName)
+                {
+                    case "playSong":
+                        _activeSong = await PlaySong(_pageParameters.SongSpoken);
+                        break;
+                    case "stopSong":
+                        _activeSong = await StopSong(_pageParameters.SongSpoken);
+                        break;
+                    case "pauseSong":
+                        _activeSong = await PauseSong(_pageParameters.SongSpoken);
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
-        public void UpdateGreeting(string name)
+        public async void UpdateGreetingAsync(string name)
         {
             var now = DateTime.Now;
             var greeting = 
                 now.Hour < 12 ? "Good morning" : now.Hour < 18 ? "Good afternoon" : "Good night";
             var user = string.IsNullOrEmpty(name) ? "!" : $", {name}!";
             welcomeUser.Text = $"{greeting}{user}";
+            if (!string.IsNullOrEmpty(name))
+            {
+                //await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                //{
+                    var SpeakGreeting = $"{greeting} {name}";
+
+                    //var songs = taskPanel.CountSongs(FamilyModel.UserFromName(name));
+
+                    //if (songs > 0)
+                    //{
+                    //    if (songs == 1)
+                    //        SpeakGreeting += ",there is a song for you.";
+                    //    else
+                    //        SpeakGreeting += $",there are {songs} song for you.";
+                    //}
+
+                    await this._speechManager.SpeakAsync(
+                                SpeakGreeting,
+                                 this._media);
+               // });
+            }
         }
+
+        private Model FamilyModel { get; set; }
 
         private void SongsGrid_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -89,6 +141,141 @@ namespace MusicLibrary
             myMediaElement.Pause();
         }
 
+        public async Task<Song> PlaySong(string name)
+        {
+            var songName = SpeechRecognitionMode.Play;
+            var song = await Song.GetSongsAsync();
+            if (songName.ToString() == name)
+            {
+                return song.FirstOrDefault();
+            }
+            myMediaElement.Play();
+            return null;
+        }
+
+        public async Task<Song> StopSong(string name)
+        {
+            var songName = SpeechRecognitionMode.Stop;
+            var song = await Song.GetSongsAsync();
+            if (songName.ToString() == name)
+            {
+                return song.FirstOrDefault();
+            }
+            myMediaElement.Stop();
+            return null;
+        }
+
+        public async Task<Song> PauseSong(string name)
+        {
+            var songName = SpeechRecognitionMode.Pause;
+            var song = await Song.GetSongsAsync();
+            if (songName.ToString() == name)
+            {
+                return song.FirstOrDefault();
+            }
+            myMediaElement.Pause();
+            return null;
+        }
+
+        #region Speech Handling
+
+        private async void speechManager_StateChanged(object sender, StateChangedEventArgs e)
+        {
+
+            if (e.IsSessionState && !e.SessionCompletedSuccessfully && e.SessionTimedOut)
+            {
+                Debug.WriteLine("Timeout exceeded, resetting RecognitionMode to CommandPhrases");
+                await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                {
+                    await _speechManager.SetRecognitionMode(SpeechRecognitionMode.CommandPhrases);
+                });
+            }
+        }
+
+        /// <summary>
+        /// Handles the <see cref="SpeechManager.PhraseRecognized"/> event.
+        /// </summary>
+        /// <param name="sender">the <see cref="SpeechManager"/> that raised the event.</param>
+        /// <param name="e">The event data.</param>
+        private async void speechManager_PhraseRecognized(object sender, PhraseRecognizedEventArgs e)
+        {
+            User user = e.PhraseTargetUser;
+            string phrase = e.PhraseText;
+            CommandVerb verb = e.Verb;
+
+            string msg = String.Format("Heard phrase: {0}", phrase);
+            Debug.WriteLine(msg);
+
+            switch (verb)
+            {
+                case CommandVerb.Play:
+                    {
+                        // The phrase came from dictation, so transition speech recognition
+                        // to listen for command phrases.
+                        await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                        {
+                            _activeSong = await PlaySong(CommandVerb.Play.ToString());
+                            await _speechManager.SetRecognitionMode(SpeechRecognitionMode.CommandPhrases);
+                        });
+
+                        break;
+                    }
+                case CommandVerb.Stop:
+                    {
+                        // A command for creating a note was recognized.
+                        await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                        {
+                            _activeSong = await StopSong(CommandVerb.Stop.ToString());
+                            await _speechManager.SpeakAsync("Stop your song", _media);
+                            await _speechManager.SetRecognitionMode(SpeechRecognitionMode.Stop);
+                        });
+
+                        break;
+                    }
+                case CommandVerb.Pause:
+                    {
+                        // The command for reading a note was recognized.
+                        await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                        {
+                            _activeSong = await PauseSong(CommandVerb.Pause.ToString());
+                            await _speechManager.SpeakAsync("Pause your song", _media);
+                            await _speechManager.SetRecognitionMode(SpeechRecognitionMode.Stop);
+                        });
+
+                        break;
+                    }
+                case CommandVerb.Show:
+                    {
+                        Debug.WriteLine("SpeechManager.PhraseRecognized handler: Show TBD");
+                        break;
+                    }
+                case CommandVerb.Help:
+                    {
+                        // A command for spoken help was recognized.
+                        await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                        {
+                            await _speechManager.SpeakAsync(_helpString, _media);
+                        });
+
+                        break;
+                    }
+                default:
+                    {
+                        Debug.WriteLine("SpeechManager.PhraseRecognized handler: Couldn't determine phrase intent");
+                        break;
+                    }
+            }
+        }
+
+       
+        #endregion
+        #region Private fields
+        private Song _activeSong;
+        private CoreDispatcher _dispatcher;
+        private SpeechManager _speechManager;
+        private VoiceCommandObjects.VoiceCommand _pageParameters;
+        private const string _helpString = "You can say: add song for user. For the active song, you can say, play song, pause song, and stop song.";
+        #endregion
         //public void SongGridView_ItemClick(object sender, ItemClickEventArgs e)
         //{
 
@@ -117,6 +304,4 @@ namespace MusicLibrary
         //    myMediaElement.Stop();
         //}
     }
-
-
 }

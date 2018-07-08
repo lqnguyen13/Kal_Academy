@@ -30,11 +30,23 @@ namespace MusicLibrary
             }
         }
 
- //       public void AddSong(Song song) => SongCollection.Add(new Song(song));
+        public User UserFromName(string name) => Family.FirstOrDefault(user => user.UserName.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+
+        [DataMember]
+        public ObservableCollection<User> Family
+        {
+            get
+            {
+                return _family;
+            }
+        }
+
+        //       public void AddSong(Song song) => SongCollection.Add(new Song(song));
 
         public void DeleteSong(Song songToDelete) => SongCollection.Remove(songToDelete);
 
         private ObservableCollection<Song> _songs;
-
+        private ObservableCollection<User> _family;
     }
 }
