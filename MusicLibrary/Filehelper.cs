@@ -83,35 +83,19 @@ namespace MusicLibrary
 
             StorageFolder assetFolder = await StorageFolder.GetFolderFromPathAsync(assetPath);
 
-            IReadOnlyList< StorageFile>fileList = await assetFolder.GetFilesAsync();
+            IReadOnlyList<StorageFile>assetFilesList = await assetFolder.GetFilesAsync();
 
-            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-
-            foreach (var file in fileList)
-            {
-                StorageFile localFile = await localFolder.CreateFileAsync(file.Name, CreationCollisionOption.OpenIfExists);
-                await file.CopyAsync(localFolder , file.Name,  NameCollisionOption.FailIfExists);
-            }
-        }
-
-        public static async Task CopyFromAssetToLocal(string filename)
-        {
-            // Get the path to the app's Assets folder.
-            string installedLocationPath = Windows.ApplicationModel.Package.Current.InstalledLocation.Path;
-            string assetPath = installedLocationPath + @"\Assets";
-
-            StorageFolder assetFolder = await StorageFolder.GetFolderFromPathAsync(assetPath);
-            StorageFile assetFile = await assetFolder.GetFileAsync(filename);
+            StorageFolder localStoragFolder = ApplicationData.Current.LocalFolder;
             
-            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            StorageFile localFile = await localFolder.GetFileAsync(filename);
-
-            if (localFile.IsAvailable)
+            foreach (var fileFromAssetFolder in assetFilesList)
             {
-                await localFile.DeleteAsync();
+                var fileName = fileFromAssetFolder.Name;
+                // if the file already exists, don't copy it again
+                if (await localStoragFolder.TryGetItemAsync(fileName) == null)
+                {
+                    await fileFromAssetFolder.CopyAsync(localStoragFolder);
+                }
             }
-
-            await assetFile.CopyAsync(localFolder);
         }
     }
 }
