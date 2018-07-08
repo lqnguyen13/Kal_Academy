@@ -113,5 +113,50 @@ namespace MusicLibrary
 
             await assetFile.CopyAsync(localFolder);
         }
+
+        public static async Task CopyUploadFileToLocal(StorageFile file)
+        {
+            // Get the path to the local file storage location
+            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+
+            // If file we want to add already exists in local, delete file
+            try
+            {
+                StorageFile localFile = await localFolder.GetFileAsync(file.Name);
+
+                if (localFile.IsAvailable)
+                {
+                    await localFile.DeleteAsync();
+                }
+            }
+            catch
+            {
+                // if the file doesn't exist, do nothing
+            }
+
+            // Copy new file to local
+            await file.CopyAsync(localFolder);
+        }
+
+        public static async Task RemoveFileFromLocal(string fileName)
+        {
+            // Get the path to the local file storage location
+            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+
+            // If file we want to delete already exists in local, delete file
+            try
+            {
+                StorageFile localFile = await localFolder.GetFileAsync(fileName);
+
+                if (localFile.IsAvailable)
+                {
+                    await localFile.DeleteAsync();
+                }
+            }
+            catch
+            {
+                // if the file doesn't exist, do nothing
+            }
+        }
     }
 }

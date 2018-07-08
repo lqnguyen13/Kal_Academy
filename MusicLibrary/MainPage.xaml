@@ -20,7 +20,7 @@
                     </StackPanel.Background>
                     <TextBlock x:Name="SongListBlock" FontSize="48" Margin="0,0,0,20"><Run Text="Song Library"/></TextBlock>
                     <Grid>
-                        <GridView x:Name="SongsGrid"  Background="Bisque" BorderThickness="10"  IsItemClickEnabled="True" ItemsSource="{Binding}" ItemClick="SongsGrid_ItemClick">
+                        <GridView x:Name="SongsGrid"  Background="Bisque" BorderThickness="10"  Height="500" IsItemClickEnabled="True" ItemsSource="{Binding}" ItemClick="SongsGrid_ItemClick">
                             <GridView.ItemTemplate>
                                 <DataTemplate x:DataType = "data:Song">
                                     <StackPanel Orientation = "Vertical" Margin = "2">
