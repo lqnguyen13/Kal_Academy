@@ -10,13 +10,13 @@
     Background="Beige">
 
     <Grid>
-        <StackPanel Margin="0,50,0,0" Orientation="Vertical">
+        <StackPanel Margin="0,20,0,0" Orientation="Vertical">
             <TextBlock x:Name="SongListBlock" FontSize="48" Text="Edit Song Library" Margin="20,0,0,0"/>
             <StackPanel Orientation="Horizontal">
-                <StackPanel x:Name="RemoveSongPanel" Orientation="Vertical" Height="600" Width="500" HorizontalAlignment="Left" Margin="20,20,10,0">
+                <StackPanel x:Name="RemoveSongPanel" Orientation="Vertical" Height="650" Width="500" HorizontalAlignment="Left" Margin="20,10,10,-4">
                     <TextBlock x:Name="RemoveSong" FontSize="30" Text="Remove a Song" FontWeight="Bold"/>
-                    <TextBlock x:Name="RemoveInstructions" TextWrapping="Wrap" Margin="0,10,0,10">Select the song from the current library that you would like to remove, then click "Remove Song From Library" button.</TextBlock>
-                    <TextBlock x:Name="CurrentLibrary" FontSize="30" Text="Current Library " Margin="0,10,0,10"/>
+                    <TextBlock x:Name="RemoveInstructions" TextWrapping="Wrap" Margin="0,10,0,5">Select the song from the current library that you would like to remove, then click "Remove Song From Library" button.</TextBlock>
+                    <TextBlock x:Name="CurrentLibrary" FontSize="30" Text="Current Library " Margin="0,5,0,10"/>
                     <StackPanel Orientation="Horizontal" Margin="2">
                         <TextBlock Text="TITLE" FontSize="20" Width="300" Margin="2"/>
                         <TextBlock Text="ARTIST" FontSize="20" Margin="2,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -35,18 +35,22 @@
                     <TextBlock x:Name = "RemoveMessage" HorizontalAlignment = "Left" TextWrapping = "Wrap" VerticalAlignment = "Top" FontSize="24" Margin="0,5,0,5"/>
                 </StackPanel>
 
-                <StackPanel Orientation="Vertical" Height="600" Width="500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,20,0,0">
+                <StackPanel Orientation="Vertical" Height="650" Width="500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,10,0,3">
                     <TextBlock x:Name="AddSong" FontSize="30" Text="Add a Song" Margin="20,0,0,0" FontWeight="Bold"/>
                     <StackPanel x:Name="AddSongPanel" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Width="500" Margin="20,10,0,0">
                         <StackPanel Orientation="Horizontal">
                             <StackPanel x:Name="AddRemovePanel" Orientation="Vertical">
                                 <TextBox x:Name="songTitle" Text="{Binding SongTitle, Mode=TwoWay}" HorizontalAlignment="Left" PlaceholderText="Enter Song Title" VerticalAlignment="Top" Width="400" Height="50" FontSize="20" Margin="0,10,0,10"/>
                                 <TextBox x:Name="songArtist" Text="{Binding SongArtist, Mode=TwoWay}" HorizontalAlignment="Left" PlaceholderText="Enter Song Artist" VerticalAlignment="Top" Width="400" Height="50" FontSize="20" Margin="0,10,0,10"/>
+                                <TextBox x:Name="songImage" Text="{Binding SongImage, Mode=TwoWay}" HorizontalAlignment="Left" PlaceholderText="Select Song Album Image" VerticalAlignment="Top" Width="400" Height="50" FontSize="20" Margin="0,10,0,10"/>
+                                <Button x:Name="AddSongImage" Content="Select Song Image (PNG)" Click="AddSongImage_Click"></Button>
+                                <TextBox x:Name="songAudio" Text="{Binding SongImage, Mode=TwoWay}" HorizontalAlignment="Left" PlaceholderText="Select Song Audio File" VerticalAlignment="Top" Width="400" Height="50" FontSize="20" Margin="0,10,0,10"/>
+                                <Button x:Name="AddSongAudio" Content="Select Song Audio File (MP3)" Click="AddSongAudio_Click"></Button>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
                     <Button x:Name = "addSong" Content = "Add Song To Playlist" HorizontalAlignment = "Left" VerticalAlignment = "Top" Click = "addSong_Click" Margin="20,10,0,0"/>
-                    <TextBlock x:Name="AddMessage" FontSize="24" Margin="20,10,0,10"></TextBlock>
+                    <TextBlock x:Name="AddMessage" FontSize="24" TextWrapping="Wrap" Margin="20,10,0,10"></TextBlock>
                 </StackPanel>
             </StackPanel>
 

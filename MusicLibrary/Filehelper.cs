@@ -83,35 +83,64 @@ namespace MusicLibrary
 
             StorageFolder assetFolder = await StorageFolder.GetFolderFromPathAsync(assetPath);
 
-            IReadOnlyList< StorageFile>fileList = await assetFolder.GetFilesAsync();
+            IReadOnlyList<StorageFile>assetFilesList = await assetFolder.GetFilesAsync();
 
-            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-
-            foreach (var file in fileList)
+            StorageFolder localStoragFolder = ApplicationData.Current.LocalFolder;
+            
+            foreach (var fileFromAssetFolder in assetFilesList)
             {
-                StorageFile localFile = await localFolder.CreateFileAsync(file.Name, CreationCollisionOption.OpenIfExists);
-                await file.CopyAsync(localFolder , file.Name,  NameCollisionOption.FailIfExists);
+                var fileName = fileFromAssetFolder.Name;
+                // if the file already exists, don't copy it again
+                if (await localStoragFolder.TryGetItemAsync(fileName) == null)
+                {
+                    await fileFromAssetFolder.CopyAsync(localStoragFolder);
+                }
             }
         }
 
-        public static async Task CopyFromAssetToLocal(string filename)
+        public static async Task CopyUploadFileToLocal(StorageFile file)
         {
-            // Get the path to the app's Assets folder.
-            string installedLocationPath = Windows.ApplicationModel.Package.Current.InstalledLocation.Path;
-            string assetPath = installedLocationPath + @"\Assets";
-
-            StorageFolder assetFolder = await StorageFolder.GetFolderFromPathAsync(assetPath);
-            StorageFile assetFile = await assetFolder.GetFileAsync(filename);
-            
+            // Get the path to the local file storage location
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            StorageFile localFile = await localFolder.GetFileAsync(filename);
 
-            if (localFile.IsAvailable)
+            // If file we want to add already exists in local, delete file
+            try
             {
-                await localFile.DeleteAsync();
+                StorageFile localFile = await localFolder.GetFileAsync(file.Name);
+
+                if (localFile.IsAvailable)
+                {
+                    await localFile.DeleteAsync();
+                }
+            }
+            catch
+            {
+                // if the file doesn't exist, do nothing
             }
 
-            await assetFile.CopyAsync(localFolder);
+            // Copy new file to local
+            await file.CopyAsync(localFolder);
+        }
+
+        public static async Task RemoveFileFromLocal(string fileName)
+        {
+            // Get the path to the local file storage location
+            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+
+            // If file we want to delete already exists in local, delete file
+            try
+            {
+                StorageFile localFile = await localFolder.GetFileAsync(fileName);
+
+                if (localFile.IsAvailable)
+                {
+                    await localFile.DeleteAsync();
+                }
+            }
+            catch
+            {
+                // if the file doesn't exist, do nothing
+            }
         }
     }
 }

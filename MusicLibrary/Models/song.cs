@@ -123,12 +123,23 @@ namespace MusicLibrary.Models
             return songs;
         }
 
-        public static async Task<List<Song>> AddSongAsync(Song songToAdd)
+        public static async Task<List<Song>> AddSongAsync(Song songToAdd, StorageFile songAddImage, StorageFile songAddFile)
         {
+            // Copy song files to local
+            await FileHelper.CopyUploadFileToLocal(songAddImage);
+            await FileHelper.CopyUploadFileToLocal(songAddFile);
+
+            // Get current list of songs
             var songs = await GetSongsAsync();
+
+            // Determine what next song ID should be
             var lastID = songs[songs.Count - 1].SongID;
             songToAdd.SongID = lastID + 1;
+
+            // Add song to song list
             songs.Add(songToAdd);
+
+            // Write new list of songs to file, then read in new file and return list of new songs
             await WriteSongsToFile(songs);
             var newSongs = await GetSongsAsync();
             return newSongs;
@@ -142,17 +153,50 @@ namespace MusicLibrary.Models
 
         public static async Task<List<Song>> RemoveSongAsync(Song songToRemove)
         {
+            bool deleteImage = true;
+            bool deleteAudio = true;
+
+            // Get current list of songs
             var songs = await GetSongsAsync();
 
+            // Iterate through list of songs, identify which song should be removed, and remove from list
             foreach (var song in songs.ToList())
             {
-                if (song.SongTitle == songToRemove.SongTitle)
+                if (song.SongID == songToRemove.SongID)
                 {
                     songs.Remove(song);
                 }
             }
+
+            // Write new list of songs to file, then read new file and return list of new songs
             await WriteSongsToFile(songs);
             var newSongs = await GetSongsAsync();
+
+            // Check if the audio or image files are being used by other songs (no audio file should be, but image file might be)
+            foreach (var song in newSongs.ToList())
+            {
+                if (song.SongImage == songToRemove.SongImage)
+                {
+                    deleteImage = false;
+                }
+
+                if (song.AudioFileName == songToRemove.AudioFileName)
+                {
+                    deleteAudio = false;
+                }
+            }
+
+            // Remove image and audio files from local folder if determined that files are not being used by other songs in current library
+            if (deleteImage)
+            {
+                await FileHelper.RemoveFileFromLocal(songToRemove.SongImage);
+            }
+            
+            if (deleteAudio)
+            {
+                await FileHelper.RemoveFileFromLocal(songToRemove.AudioFileName);
+            }
+
             return newSongs;
         }
 

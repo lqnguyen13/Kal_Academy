@@ -1,5 +1,5 @@
 1|Come Together|The Beatles|AbbeyRoadCover.png|ComeTogether.mp3
-2|Imagine|John Lenon|imagine_album.png|Imagine.mp3	
-3|Love Story|Taylor Swift|Fearless_album.png|Love Story.mp3	
+2|Imagine|John Lenon|imagine_album.png|Imagine.mp3
+3|Love Story|Taylor Swift|Fearless_album.png|Love Story.mp3
 4|All You Need Is Love|The Beatles|All You Need Is Love_album.png|All You Need Is Love.mp3
 5|Taylor|Jack Johnson|in_between_dreams_album.png|Taylor.mp3
