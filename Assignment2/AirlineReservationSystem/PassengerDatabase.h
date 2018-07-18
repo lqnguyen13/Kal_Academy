@@ -12,10 +12,14 @@ namespace AirlineReservationSystem {
 		int mNextPassengerNumber = kFirstPassengerNumber;
 
 	public:
-		Passenger& addPassenger(const std::string& passFirstName, const std::string& passLastName);
+		Passenger & addPassenger(const std::string& passFirstName, const std::string& passLastName);
 		Passenger& addPassenger(const std::string& passFirstName, const std::string& passLastName, const std::string& passPhoneNum, const std::string& passEmail);
+		Passenger& getPassenger(int passengerNumber);
 		Passenger& getPassenger(const std::string& passFirstName, const std::string& passLastName);
-		
-		void displayAllPassengers() const;
+
+		void displayAll() const;
+		void displayCurrent() const;
+		void displayFormer() const;
+
 	};
 }
