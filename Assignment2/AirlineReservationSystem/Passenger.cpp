@@ -65,7 +65,7 @@ namespace AirlineReservationSystem {
 	}
 
 	void Passenger::display() const {
-		cout << "Passenger: " << getFirstName() << ", " << getFirstName() << endl;
+		cout << "Passenger: " << getLastName() << ", " << getFirstName() << endl;
 		cout << "Passenger ID: " << getPassengerID() << endl;
 		cout << "Passenger Email: " << getEmail() << endl;
 		cout << "Passenger Phone Number: " << getPhoneNumber() << endl;
