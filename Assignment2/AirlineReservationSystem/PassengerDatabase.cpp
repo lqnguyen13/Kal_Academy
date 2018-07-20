@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include <iostream>
+#include <algorithm> // for use of std::transform method for converting strings to all lowercase
 #include "PassengerDatabase.h"
 #include <stdexcept>
 
@@ -34,8 +35,14 @@ namespace AirlineReservationSystem {
 	Passenger& PassengerDatabase::getPassenger(const string& passFirstName,
 		const string& passLastName) {
 		for (auto& passenger : mPassengers) {
-			if (passenger.getFirstName() == passFirstName &&
-				passenger.getLastName() == passLastName) {
+			string fName = passenger.getFirstName();
+			string lName = passenger.getLastName();
+
+			transform(fName.begin(), fName.end(), fName.begin(), tolower);
+			transform(lName.begin(), lName.end(), lName.begin(), tolower);
+
+			if (fName == passFirstName &&
+				lName == passLastName) {
 				return passenger;
 			}
 		}
