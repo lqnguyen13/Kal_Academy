@@ -15,7 +15,7 @@ namespace AirlineReservationSystem {
 		Ticket() = default;
 		//Getters and setters
 
-		Ticket(int & mTicketNum, int & mPassengerID, int & mFlightNum, const std::string & mFlightDate, const std::string & mSeat);
+		Ticket(int mPassengerID, int mFlightNum, const std::string& mFlightDate);
 
 		void setTicketNum(int ticketNum);
 		int getTicketNum() const;
@@ -31,5 +31,7 @@ namespace AirlineReservationSystem {
 
 		void setSeat(const std::string& seat);
 		const std::string& getSeat() const;
+
+		void displayTicket();
 	};
 }

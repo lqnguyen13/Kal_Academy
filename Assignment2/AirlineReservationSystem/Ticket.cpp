@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <iostream>
 #include "Ticket.h"
 
 using namespace std;
@@ -12,8 +13,8 @@ using namespace std;
 
 namespace AirlineReservationSystem {
 
-	Ticket::Ticket(int& ticketNum, int& passengerID, int& flightNum, const std::string& flightDate, const std::string& seat) :
-		mTicketNum(ticketNum), mPassengerID(passengerID), mFlightNum(flightNum), mFlightDate(flightDate), mSeat(seat)
+	Ticket::Ticket(int passengerID, int flightNum, const std::string& flightDate) :
+		mPassengerID(passengerID), mFlightNum(flightNum), mFlightDate(flightDate)
 	{}
 
 
@@ -42,6 +43,10 @@ namespace AirlineReservationSystem {
 	{
 		mFlightDate = flightDate;
 	}
+	const std::string& Ticket::getFlightDate() const
+	{
+		return mFlightDate;
+	}
 
 	void Ticket::setSeat(const std::string& seat)
 	{
@@ -50,6 +55,12 @@ namespace AirlineReservationSystem {
 	const std::string& Ticket::getSeat() const
 	{
 		return mSeat;
+	}
+	void Ticket::displayTicket()
+	{
+		cout << "Ticket Information: " << endl;
+		cout << "----------------------" << endl;
+		cout << "Ticket Number: " << getTicketNum() << endl;
 	}
 
 }

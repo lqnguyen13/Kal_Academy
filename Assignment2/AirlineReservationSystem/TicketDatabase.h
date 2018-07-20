@@ -12,11 +12,10 @@ namespace AirlineReservationSystem {
 		int mNextTicketNumber = kFirstTicketNumber;
 
 	public:
-		// TODO: WRITE SETTERS/GETTERS AND METHODS IN HEADER FILE
-		Ticket& addTicket(const int selectedFlightNum, const std::string& selectedFlightDate, const std::string& passFirstName, const std::string& passLastName); // Creates a ticket and adds to mTickets vector
-		Ticket& getTicket(int ticketNumber);
-		Ticket& getTicket(const std::string& passFirstName, const std::string& passLastName);
+		Ticket& addTicket(const int selectedFlightNum, const std::string& selectedFlightDate, const int passengerId); // Creates a ticket and adds to mTickets vector
+		Ticket& getTicketByTicketNum(int ticketNumber);
+		Ticket& getTicketByPassengerNum(int passengerId);
 		
-		void displayTicket() const; //Not sure if we need this
+		void display(Ticket ticket) const;
 	};
 }
