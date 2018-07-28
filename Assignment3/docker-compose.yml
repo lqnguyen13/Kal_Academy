@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  eventsharer:
+    image: ${DOCKER_REGISTRY}eventsharer
+    build:
+      context: .
+      dockerfile: EventSharer/Dockerfile
