@@ -3,10 +3,10 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>91b34cf7-d5c2-4a39-bbb1-48c2550180fb</ProjectGuid>
+    <ProjectGuid>85ff8419-ba3d-4b9b-a3ad-de9ca7022a73</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/api/values</DockerServiceUrl>
-    <DockerServiceName>eventsharer</DockerServiceName>
+    <DockerServiceName>eventcatalogapi</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">
