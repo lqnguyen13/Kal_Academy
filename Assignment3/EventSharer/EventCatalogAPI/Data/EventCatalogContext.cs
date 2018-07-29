@@ -18,6 +18,7 @@ namespace EventCatalogAPI.Data
         public DbSet<EventType> EventTypes { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Event> Events { get; set; }
+        public object Location { get; internal set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -43,9 +44,9 @@ namespace EventCatalogAPI.Data
                 .IsRequired();
             builder.Property(c => c.PictureUrl)
                 .HasMaxLength(150);
-            builder.Property(c => c.EventDate)
+            builder.Property(c => c.EventStart)
                 .IsRequired();
-            builder.Property(c => c.EventTime)
+            builder.Property(c => c.EventEnd)
                 .IsRequired();
 
             builder.HasOne(c => c.EventType)
@@ -54,7 +55,7 @@ namespace EventCatalogAPI.Data
 
             builder.HasOne(c => c.Location)
                 .WithMany()
-                .HasForeignKey(c => c.LoactionId);
+                .HasForeignKey(c => c.LocationId);
         }
 
         private void ConfigureLocation(EntityTypeBuilder<Location> builder)

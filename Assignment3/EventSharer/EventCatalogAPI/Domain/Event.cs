@@ -12,11 +12,11 @@ namespace EventCatalogAPI.Domain
         public string Description { get; set; }
         public decimal Price { get; set; }
         public string PictureUrl { get; set; }
-        public DateTime EventDate { get; set; }
-        public DateTime EventTime { get; set; }
+        public DateTime EventStart { get; set; }
+        public DateTime EventEnd { get; set; }
 
         public int EventTypeId { get; set; }
-        public int LoactionId { get; set; }
+        public int LocationId { get; set; }
 
         public virtual EventType EventType { get; set; }
         public virtual Location Location { get; set; }
