@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using EventCatalogAPI.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 namespace EventCatalogAPI.Controllers
@@ -23,5 +24,45 @@ namespace EventCatalogAPI.Controllers
         }
 
         //TODO Add API Get, Post, Put, and Delete methods
+        
+        // get event types from database
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<IActionResult> EventTypes()
+        {
+            var items = await _catalogContext.EventTypes.ToListAsync();
+            return Ok(items);
+        }
+
+        // get event locations from database
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<IActionResult> Locations()
+        {
+            var items = await _catalogContext.Locations.ToListAsync();
+            return Ok(items);
+        }
+
+        // get event by event id
+        [HttpGet]
+        [Route("events/{id:int}")]
+        public async Task<IActionResult> GetEventbyId (int id)
+        {
+            // check if id value entered is valid, if not then return bad request
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+            // get event based on matching id
+            var item = await _catalogContext.Events.SingleOrDefaultAsync(i => i.Id == id);
+            if (item != null)
+            {
+                // if event is found, replace picture URL and return
+                item.PictureUrl = item.PictureUrl.Replace("http://externalcatalogbaseurltobereplaced", _settings.Value.ExternalCatalogBaseUrl);
+                return Ok(item);
+            }
+            // otherwise return that event was not found
+            return NotFound();
+        }
     }
 }
