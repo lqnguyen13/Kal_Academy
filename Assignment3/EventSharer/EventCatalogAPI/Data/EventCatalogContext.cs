@@ -18,7 +18,6 @@ namespace EventCatalogAPI.Data
         public DbSet<EventType> EventTypes { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Event> Events { get; set; }
-        public object Location { get; internal set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
