@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EventCatalogAPI.Data;
+using EventCatalogAPI.Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -63,6 +64,59 @@ namespace EventCatalogAPI.Controllers
             }
             // otherwise return that event was not found
             return NotFound();
+        }
+
+        [HttpPost]
+        [Route("events")]
+        public async Task<IActionResult> CreateEvent(
+            [FromBody] Event eventToCreate)
+        {
+            var newEvent = new Event
+            {
+                LocationId = eventToCreate.LocationId,
+                EventTypeId = eventToCreate.EventTypeId,
+                Description = eventToCreate.Description,
+                Name = eventToCreate.Name,
+                PictureUrl = eventToCreate.PictureUrl,
+                Price = eventToCreate.Price,
+                EventStart = eventToCreate.EventStart,
+                EventEnd = eventToCreate.EventEnd
+            };
+            _catalogContext.Events.Add(eventToCreate);
+            await _catalogContext.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetEventbyId), new { id = newEvent.Id });
+        }
+
+        [HttpPut]
+        [Route("events")]
+        public async Task<IActionResult> UpdateEvent(
+            [FromBody] Event eventToUpdate)
+        {
+            var eventUpdate = await _catalogContext.Events
+                .SingleOrDefaultAsync(e => e.Id == eventToUpdate.Id);
+            if (eventUpdate == null)
+            {
+                return NotFound(new { Message = $"Event with id {eventToUpdate.Id} not found." });
+            }
+            eventUpdate = eventToUpdate;
+            _catalogContext.Events.Update(eventUpdate);
+            await _catalogContext.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetEventbyId), new { id = eventToUpdate.Id });
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> DeleteEvent(int id)
+        {
+            var eventToDelete = await _catalogContext.Events
+                .SingleOrDefaultAsync(e => e.Id == id);
+            if (eventToDelete == null)
+            {
+                return NotFound();
+            }
+            _catalogContext.Events.Remove(eventToDelete);
+            await _catalogContext.SaveChangesAsync();
+            return NoContent();
         }
     }
 }
