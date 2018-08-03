@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EventCatalogAPI.Data;
 using EventCatalogAPI.Domain;
+using EventCatalogAPI.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -65,6 +66,37 @@ namespace EventCatalogAPI.Controllers
             // otherwise return that event was not found
             return NotFound();
         }
+
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<IActionResult> Events(
+            [FromQuery] int pageSize = 6,
+            [FromQuery] int pageIndex = 0)
+        {
+            var totalEvents = await _catalogContext.Events.
+                LongCountAsync();
+            var eventsOnPage = await _catalogContext.Events
+                .OrderBy(c => c.Name)
+                .Skip(pageSize * pageIndex)
+                .Take(pageSize)
+                .ToListAsync();
+            eventsOnPage = ChangeUrlPlaceHolder(eventsOnPage);
+
+            var model = new PaginatedItemsViewModel<Event>(pageIndex, pageSize, totalEvents, eventsOnPage);
+            return Ok(model);
+        }
+
+        private List<Event> ChangeUrlPlaceHolder(List<Event> items)
+        {
+        
+            items.ForEach(
+                x => x.PictureUrl =
+                    x.PictureUrl
+                        .Replace("http://externalcatalogbaseurltobereplaced",
+                            _settings.Value.ExternalCatalogBaseUrl));
+            return items;
+        }
+
 
         [HttpPost]
         [Route("events")]
