@@ -170,9 +170,9 @@ namespace EventCatalogAPI.Controllers
                 EventStart = eventToCreate.EventStart,
                 EventEnd = eventToCreate.EventEnd
             };
-            _catalogContext.Events.Add(eventToCreate);
+            _catalogContext.Events.Add(newEvent);
             await _catalogContext.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetEventbyId), new { id = newEvent.Id });
+            return CreatedAtAction(nameof(GetEventbyId), new { id = newEvent.Id }, newEvent);
         }
 
         [HttpPut]
@@ -180,7 +180,7 @@ namespace EventCatalogAPI.Controllers
         public async Task<IActionResult> UpdateEvent(
             [FromBody] Event eventToUpdate)
         {
-            var eventUpdate = await _catalogContext.Events
+            var eventUpdate = await _catalogContext.Events.AsNoTracking()
                 .SingleOrDefaultAsync(e => e.Id == eventToUpdate.Id);
             if (eventUpdate == null)
             {
@@ -189,7 +189,7 @@ namespace EventCatalogAPI.Controllers
             eventUpdate = eventToUpdate;
             _catalogContext.Events.Update(eventUpdate);
             await _catalogContext.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetEventbyId), new { id = eventToUpdate.Id });
+            return CreatedAtAction(nameof(GetEventbyId), new { id = eventToUpdate.Id }, eventToUpdate);
         }
 
         [HttpDelete]
