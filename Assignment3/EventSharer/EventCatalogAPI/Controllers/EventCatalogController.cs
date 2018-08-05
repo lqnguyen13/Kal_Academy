@@ -86,6 +86,62 @@ namespace EventCatalogAPI.Controllers
             return Ok(model);
         }
 
+        // GET api/events/type/1/location/null[?pageSize=4&pageIndex=0]
+        [HttpGet]
+        [Route("[action]/type/{eventTypeId}/location/{locationId}")]
+        public async Task<IActionResult> Events(
+            int? eventTypeId,
+            int? locationId,
+            [FromQuery] int pageSize = 6,
+            [FromQuery] int pageIndex = 0)
+        {
+            var root = (IQueryable<Event>) _catalogContext.Events;
+
+            if (eventTypeId.HasValue)
+            {
+                root = root.Where(e => e.EventTypeId == eventTypeId);
+            }
+            if (locationId.HasValue)
+            {
+                root = root.Where(e => e.LocationId == locationId);
+            }
+
+            var totalEvents = await root
+                    .LongCountAsync();
+            var eventsOnPage = await root
+                    .OrderBy(c => c.Name)
+                    .Skip(pageSize * pageIndex)
+                    .Take(pageSize)
+                    .ToListAsync();
+            eventsOnPage = ChangeUrlPlaceHolder(eventsOnPage);
+
+            var model = new 
+                PaginatedItemsViewModel<Event>(pageIndex, pageSize, totalEvents, eventsOnPage);
+            return Ok(model);
+        }
+
+        // GET api/Catalog/Items/type/1/brand/null[?pageSize=4&pageIndex=0]
+        [HttpGet]
+        [Route("[action]/with/{name:minlength(1)}")]
+        public async Task<IActionResult> Events(string name,
+            [FromQuery] int pageSize = 6,
+            [FromQuery] int pageIndex = 0)
+        {
+            var totalEvents = await _catalogContext.Events
+                .Where(e => e.Name.StartsWith(name))
+                .LongCountAsync();
+            var eventsOnPage = await _catalogContext.Events
+                .Where(e => e.Name.StartsWith(name))
+                .OrderBy(c => c.Name)
+                .Skip(pageSize * pageIndex)
+                .Take(pageSize)
+                .ToListAsync();
+            eventsOnPage = ChangeUrlPlaceHolder(eventsOnPage);
+
+            var model = new PaginatedItemsViewModel<Event>(pageIndex, pageSize, totalEvents, eventsOnPage);
+            return Ok(model);
+        }
+
         private List<Event> ChangeUrlPlaceHolder(List<Event> items)
         {
         
