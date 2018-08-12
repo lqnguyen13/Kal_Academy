@@ -9,11 +9,11 @@ using WebMvc.ViewModels;
 
 namespace WebMvc.Controllers
 {
-    public class EventController : Controller
+    public class EventCatalogController : Controller
     {
         private IEventCatalogService _catalogSvc;
 
-        public EventController(IEventCatalogService catalogSvc) =>
+        public EventCatalogController(IEventCatalogService catalogSvc) =>
             _catalogSvc = catalogSvc;
 
         public async Task<IActionResult> Index(
@@ -21,7 +21,7 @@ namespace WebMvc.Controllers
             int? EventTypeFilterApplied, int? page)
         {
 
-            int itemsPage = 10;
+            int itemsPage = 6;
             var catalog = await
                 _catalogSvc.GetEvents
                 (page ?? 0, itemsPage, LocationFilterApplied,
@@ -29,8 +29,8 @@ namespace WebMvc.Controllers
             var vm = new EventIndexViewModel()
             {
                 EventItems = catalog.Data,
-                Location = await _catalogSvc.GetLocations(),
-                EventType = await _catalogSvc.GetTypes(),
+                Locations = await _catalogSvc.GetLocations(),
+                EventTypes = await _catalogSvc.GetTypes(),
                 LocationFilterApplied = LocationFilterApplied ?? 0,
                 EventTypeFilterApplied = EventTypeFilterApplied ?? 0,
                 PaginationInfo = new PaginationInfo()

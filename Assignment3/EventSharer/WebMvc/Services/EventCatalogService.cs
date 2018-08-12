@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WebMvc.Infrastructure;
+using WebMvc.Models;
 
 namespace WebMvc.Services
 {
@@ -21,14 +22,14 @@ namespace WebMvc.Services
         {
             _settings = settings;
             _apiClient = httpClient;
-            _remoteServiceBaseUrl = $"{ _settings.Value.EventUrl }/api/event";
+            _remoteServiceBaseUrl = $"{ _settings.Value.CatalogUrl }/api/eventcatalog/";
         }
 
-        public async Task<Event> GetEvents(int page, int take, int? loction, int? type)
+        public async Task<EventCatalog> GetEvents(int page, int take, int? loction, int? type)
         {
             var allEventsUrl = ApiPaths.EventCatalog.GetAllEvents(_remoteServiceBaseUrl, page, take, loction, type);
             var dataString = await _apiClient.GetStringAsync(allEventsUrl);
-            var response = JsonConvert.DeserializeObject<Event>(dataString);
+            var response = JsonConvert.DeserializeObject<EventCatalog>(dataString);
             return response;
         }
 
@@ -48,7 +49,7 @@ namespace WebMvc.Services
                 items.Add(new SelectListItem()
                 {
                     Value = location.Value<string>("id"),
-                    Text = location.Value<string>("location")
+                    Text = location.Value<string>("region")
                 });
             }
             return items;
@@ -64,13 +65,13 @@ namespace WebMvc.Services
                 new SelectListItem() { Value = null, Text = "All", Selected = true }
             };
 
-            var locations = JArray.Parse(dataString);
-            foreach (var location in locations.Children<JObject>())
+            var types = JArray.Parse(dataString);
+            foreach (var eventType in types.Children<JObject>())
             {
                 items.Add(new SelectListItem()
                 {
-                    Value = location.Value<string>("id"),
-                    Text = location.Value<string>("type")
+                    Value = eventType.Value<string>("id"),
+                    Text = eventType.Value<string>("type")
                 });
             }
             return items;

@@ -7,6 +7,6 @@ namespace WebMvc
 {
     public class AppSettings
     {
-        public string EventUrl { get; set; }
+        public string CatalogUrl { get; set; }
     }
 }
