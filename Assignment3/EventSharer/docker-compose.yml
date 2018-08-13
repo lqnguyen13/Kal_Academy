@@ -3,7 +3,9 @@ version: "3.4"
 networks:
    frontend:
    backend:
+
 services:
+
    eventcatalog:
       build:
          context: .\EventCatalogAPI
@@ -16,12 +18,13 @@ services:
          DatabaseUserPassword: EventCatalogApi1
       container_name: eventcatalogapi
       ports:
-         - "5000:80"
+          - "5000:80"
       networks:
-         - backend
-         - frontend
+          - backend
+          - frontend
       depends_on:
-         - eventmssqlserver
+          - eventmssqlserver
+
    eventmssqlserver:
       image: "microsoft/mssql-server-linux:latest"
       ports:
@@ -32,3 +35,19 @@ services:
          SA_PASSWORD: EventCatalogApi1
       networks:
          - backend
+
+   tokenserver:
+      build:
+         context: .\TokenServiceApi
+         dockerfile: Dockerfile
+      environment: 
+         ASPNETCORE_ENVIRONMENT: Development 
+         MvcClient: http://localhost:5200   
+      container_name: tokenserviceapi
+      ports:
+         - "5020:80"
+      networks:
+         - backend
+         - frontend 
+      depends_on:
+         - eventmssqlserver

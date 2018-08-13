@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebMvc", "WebMvc\WebMvc.csp
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{7391803B-18B8-4E33-AC34-8F753FBB4E2B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokenServiceApi", "TokenServiceApi\TokenServiceApi.csproj", "{7F83056B-3BC9-4D57-AE4D-FAA5A2B33608}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{7391803B-18B8-4E33-AC34-8F753FBB4E2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7391803B-18B8-4E33-AC34-8F753FBB4E2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7391803B-18B8-4E33-AC34-8F753FBB4E2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F83056B-3BC9-4D57-AE4D-FAA5A2B33608}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F83056B-3BC9-4D57-AE4D-FAA5A2B33608}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F83056B-3BC9-4D57-AE4D-FAA5A2B33608}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F83056B-3BC9-4D57-AE4D-FAA5A2B33608}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,6 +48,7 @@ Global
 		{BA337860-638E-4145-870B-21DC4C21AEE4} = {6BE63CBE-9048-4229-A002-2B1A5CF37E0E}
 		{B2F8E5CF-6140-437E-8A98-686548C6E650} = {926593BE-6A7E-4924-B976-B3D498F82225}
 		{53CD40A5-D967-4637-B5D9-E686F7957AA8} = {B2F8E5CF-6140-437E-8A98-686548C6E650}
+		{7F83056B-3BC9-4D57-AE4D-FAA5A2B33608} = {6BE63CBE-9048-4229-A002-2B1A5CF37E0E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E44DAC9D-C63E-4B37-B6E0-6BDF9591CC51}
