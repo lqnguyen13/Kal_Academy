@@ -43,7 +43,7 @@ services:
       environment: 
          ASPNETCORE_ENVIRONMENT: Development 
          MvcClient: http://localhost:5200   
-      container_name: tokenserviceapi
+      container_name: eventtokenserviceapi
       ports:
          - "5020:80"
       networks:

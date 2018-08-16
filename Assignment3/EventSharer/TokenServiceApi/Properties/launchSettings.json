@@ -1,12 +1,12 @@
 {
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:52373/",
-      "sslPort": 0
-    }
-  },
+    "iisSettings": {
+        "windowsAuthentication": false,
+        "anonymousAuthentication": true,
+        "iisExpress": {
+            "applicationUrl": "http://localhost:52373/",
+            "sslPort": 0
+        }
+    },
     "profiles": {
         "IIS Express": {
             "commandName": "IISExpress",
@@ -15,13 +15,13 @@
                 "ASPNETCORE_ENVIRONMENT": "Development"
             }
         },
-        "TokenServiceApi": {
+        "EventTokenServiceApi": {
             "commandName": "Project",
             "launchBrowser": true,
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
-            "applicationUrl": "http://localhost:52387/"
+            "applicationUrl": "http://localhost:5020/"
         },
         "Docker": {
             "commandName": "Docker",
@@ -29,3 +29,4 @@
             "launchUrl": "{Scheme}://localhost:{ServicePort}"
         }
     }
+}
