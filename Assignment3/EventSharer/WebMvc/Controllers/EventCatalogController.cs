@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebMvc.Services;
 using WebMvc.ViewModels;
@@ -46,6 +47,12 @@ namespace WebMvc.Controllers
             vm.PaginationInfo.Previous = (vm.PaginationInfo.ActualPage == 0) ? "is-disabled" : "";
 
             return View(vm);
+        }
+        [Authorize]
+        public IActionResult About()
+        {
+            ViewData["Message"] = "Your application description page";
+            return View();
         }
     }
 }
