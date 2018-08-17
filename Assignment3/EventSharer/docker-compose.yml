@@ -51,3 +51,20 @@ services:
          - frontend 
       depends_on:
          - eventmssqlserver
+
+   webmvc:
+      build: 
+         context: .\WebMvc
+         dockerfile: Dockerfile
+      environment: 
+         ASPNETCORE_ENVIRONMENT: Development 
+         CatalogUrl: http://eventcatalog
+         IdentityUrl: http://10.10.75.1:5020
+      container_name: eventshop
+      ports:
+         - "5200:80"
+      networks:
+         - frontend 
+      depends_on:
+         - tokenserver
+         - eventcatalog

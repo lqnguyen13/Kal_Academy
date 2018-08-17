@@ -22,7 +22,7 @@ namespace WebMvc.Services
         {
             _settings = settings;
             _apiClient = httpClient;
-            _remoteServiceBaseUrl = $"{ _settings.Value.CatalogUrl }/api/eventcatalog/";
+            _remoteServiceBaseUrl = $"{ _settings.Value.EventCatalogUrl }/api/eventcatalog/";
         }
 
         public async Task<EventCatalog> GetEvents(int page, int take, int? loction, int? type)
