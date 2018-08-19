@@ -18,7 +18,7 @@ namespace TokenServiceApi.Data
 
             context.Database.Migrate();
 
-            if (context.Users.Any(r => r.UserName == "me@myemail.com")) return;
+            if (context.Users.Any(r => r.UserName == "test@email.com")) return;
 
             string user = "test@email.com";
             string password = "Password123!";

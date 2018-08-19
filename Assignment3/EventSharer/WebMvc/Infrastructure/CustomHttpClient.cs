@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace WebMvc.Infrastructure
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<HttpResponseMessage> DeleteAsync<T>(string uri, string authorizationToken = null, string authorizationMethod = "Bearer")
+        public async Task<HttpResponseMessage> DeleteAsync(string uri, string authorizationToken = null, string authorizationMethod = "Bearer")
         {
             var requestMessage = new HttpRequestMessage(HttpMethod.Delete, uri);
             if (authorizationToken != null)
@@ -71,7 +72,7 @@ namespace WebMvc.Infrastructure
 
             var response = await _client.SendAsync(requestMessage);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+            if (response.StatusCode == HttpStatusCode.InternalServerError)
             {
                 throw new HttpRequestException();
             }

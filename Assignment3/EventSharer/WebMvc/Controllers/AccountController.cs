@@ -34,7 +34,7 @@ namespace WebMvc.Controllers
             {
                 ViewData["id_token"] = idToken;
             }
-            return RedirectToAction(nameof(EventCatalogController.About));
+            return RedirectToAction(nameof(EventCatalogController.About),"EventCatalog");
         }
 
         public async Task<IActionResult> Signout()

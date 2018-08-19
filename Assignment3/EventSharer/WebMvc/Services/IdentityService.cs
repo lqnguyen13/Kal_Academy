@@ -14,13 +14,11 @@ namespace WebMvc.Services
         {
             if (principal is ClaimsPrincipal claims)
             {
-                var user = new ApplicationUser()
+                return new ApplicationUser
                 {
-                    Email = claims.Claims.FirstOrDefault(x => x.Type == "preffered_username")?.Value ?? "",
+                    Email = claims.Claims.FirstOrDefault(x => x.Type == "preferred_username")?.Value ?? "",
                     Id = claims.Claims.FirstOrDefault(x => x.Type == "sub")?.Value ?? "",
                 };
-
-                return user;
             }
 
             throw new ArgumentException(message: "The principal must be a ClaimsPrincipal", paramName: nameof(principal));
