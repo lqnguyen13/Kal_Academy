@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using OrderAPI.Infrastructure.Exceptions;
 
 namespace OrderAPI.Models
 {
@@ -19,7 +20,7 @@ namespace OrderAPI.Models
 
         public string PictureUrl  { get; set; }
 
-        public decimal UnitPrice{ get; set; }() {}
+        public decimal UnitPrice{ get; set; }
 
         public int Units { get; set; }
 
