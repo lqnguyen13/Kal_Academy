@@ -7,8 +7,6 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Infrastructure\ActionResults\" />
-    <Folder Include="Infrastructure\Filters\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
@@ -16,6 +14,7 @@
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.0.1916590" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
