@@ -8,7 +8,7 @@ namespace CartAPI.Model
     public class Cart
     {
         public string BuyerId { get; set; }
-        public List<CartItem> Items { get; set; };
+        public List<CartItem> Items { get; set; }
 
         public Cart(string cartId)
         {
