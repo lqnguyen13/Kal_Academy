@@ -26,7 +26,7 @@ namespace OrderAPI.Models
 
         public Order Order { get; set; }
 
-        public int OrderID { get; set; }
+        public int OrderId { get; set; }
 
        protected OrderItem()
         {
