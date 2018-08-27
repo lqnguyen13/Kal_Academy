@@ -15,6 +15,7 @@ namespace OrderAPI.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime OrderDate { get; set; }
+        public string BuyerId { get; set; }
         public string UserName { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public string Address { get; set; }
