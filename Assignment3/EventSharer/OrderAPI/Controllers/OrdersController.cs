@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -29,7 +27,7 @@ namespace OrderAPI.Controllers
 
             _ordersContext = ordersContext ?? throw new ArgumentNullException(nameof(ordersContext));
 
-            ((DBContext) ordersContext).ChangeTracker.QuertyTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            ((DBContext)ordersContext).ChangeTracker.QuertyTrackingBehavior = QueryTrackingBehavior.NoTracking;
 
             _logger = logger;
         }
@@ -37,9 +35,8 @@ namespace OrderAPI.Controllers
         // POST api/Order
         [Route("new")]
         [HttpPost]
-        [ProducesResponseType((int) HttpStatusCode.Accepted)]
-        [ProducesResponseType((int) HttpStatusCode.Accepted)]
-        [((int) HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.Accepted)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> CreateOrder([FromBody] Order order)
         {
 
@@ -50,7 +47,7 @@ namespace OrderAPI.Controllers
             _ordersContext.OrderItems.AddRange(order.OrderItems);
 
             await _ordersContext.SaveChangesAsync();
-            return CreatedAtRoute("GetOrder", new (id = order.OrderId, order ));
+            return CreatedAtRoute("GetOrder", new { id = order.OrderId }, order);
         }
 
         [HttpGet("{id}", Name = "GetOrder")]
