@@ -15,7 +15,7 @@ namespace OrderAPI.Controllers
     public class OrdersController : Controller
     {
         private readonly OrdersContext _ordersContext;
-        private readonly IOptionsSnapshot<OrdersSettings> _settings;
+        private readonly IOptionsSnapshot<OrderSettings> _settings;
 
         private readonly ILogger<OrdersContext> _logger;
 
@@ -27,7 +27,7 @@ namespace OrderAPI.Controllers
 
             _ordersContext = ordersContext ?? throw new ArgumentNullException(nameof(ordersContext));
 
-            ((DBContext)ordersContext).ChangeTracker.QuertyTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            ((DbContext)ordersContext).ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 
             _logger = logger;
         }
@@ -72,7 +72,7 @@ namespace OrderAPI.Controllers
         [Route("")]
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.Accepted)]
-        [EventrResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> GetOrders()
         {
             var orders = await _ordersContext.Orders.ToListAsync();
