@@ -8,9 +8,9 @@ namespace WebMvc
     public class AppSettings
     {
         public string EventCatalogUrl { get; set; }
-
         public string IdentityUrl { get; set; }
-
+        public string CartUrl { get; set; }
+        public string OrderUrl { get; set; }
         public string CallBackUrl { get; set; }
         public Logging Logging { get; set; }
     }
