@@ -67,7 +67,7 @@ namespace CartAPI
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<ICartRepository, RedisCartRepository>();
-            //   services.AddTransient<IIdentityService, IdentityService>();
+              // services.AddTransient<IIdentityService, IdentityService>();
 
         }
 
