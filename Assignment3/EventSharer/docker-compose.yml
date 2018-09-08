@@ -6,6 +6,27 @@ networks:
 
 services:
 
+   eventwebmvc:
+      build: 
+         context: .\WebMvc
+         dockerfile: Dockerfile
+      environment: 
+         ASPNETCORE_ENVIRONMENT: Development 
+         EventCatalogUrl: http://eventcatalog
+         IdentityUrl: http://10.0.75.1:5120
+         CartUrl: http://eventcart
+         OrderUrl: http://eventorder
+      container_name: eventshop
+      ports:
+         - "5100:80"
+      networks:
+         - frontend 
+      depends_on:
+         - eventtokenserver
+         - eventcatalog
+         - eventcart
+         - eventorder
+
    eventcatalog:
       build:
          context: .\EventCatalogAPI
@@ -25,6 +46,63 @@ services:
       depends_on:
           - eventmssqlserver
 
+   eventtokenserver:
+      build:
+         context: .\TokenServiceApi
+         dockerfile: Dockerfile
+      environment: 
+         ASPNETCORE_ENVIRONMENT: Development 
+         MvcClient: http://localhost:5100
+         BasketApiClient: http://localhost:5150
+         OrderApiClient: http://localhost:5160
+      container_name: eventtokenserviceapi
+      ports:
+         - "5120:80"
+      networks:
+         - backend
+         - frontend 
+      depends_on:
+         - eventmssqlserver
+
+   eventcart:
+      image: eventcartimage
+      build:
+         context: .\CartAPI
+         dockerfile: Dockerfile
+      environment:
+         ASPNETCORE_ENVIRONMENT: Development
+         IdentityUrl: http://eventtokenserver
+      container_name: eventcartapi
+      ports:
+         - "5150:80"
+      networks:
+         - backend
+         - frontend
+      depends_on:
+         - basket.data
+         - eventtokenserver
+
+   eventorder:
+      image: events/order
+      build: 
+         context: .\OrderAPI
+         dockerfile: Dockerfile
+      environment:
+         ASPNETCORE_ENVIRONMENT: Development
+         IdentityUrl: http://eventtokenserver
+         SQLSERVER_HOST: eventmssqlserver
+         SA_PASSWORD: EventCatalogApi1
+         DATABASE: OrdersDb
+      container_name: eventorderapi
+      ports:
+         - "5160:80"
+      networks:
+         - backend
+         - frontend
+      depends_on:
+         - eventmssqlserver
+         - eventtokenserver
+
    eventmssqlserver:
       image: "microsoft/mssql-server-linux:latest"
       ports:
@@ -36,35 +114,10 @@ services:
       networks:
          - backend
 
-   eventtokenserver:
-      build:
-         context: .\TokenServiceApi
-         dockerfile: Dockerfile
-      environment: 
-         ASPNETCORE_ENVIRONMENT: Development 
-         MvcClient: http://localhost:5100   
-      container_name: eventtokenserviceapi
+   basket.data:
+      image: redis
       ports:
-         - "5120:80"
+         - "6379:6379"
       networks:
          - backend
-         - frontend 
-      depends_on:
-         - eventmssqlserver
 
-   eventwebmvc:
-      build: 
-         context: .\WebMvc
-         dockerfile: Dockerfile
-      environment: 
-         ASPNETCORE_ENVIRONMENT: Development 
-         EventCatalogUrl: http://eventcatalog
-         IdentityUrl: http://10.10.75.1:5120
-      container_name: eventshop
-      ports:
-         - "5100:80"
-      networks:
-         - frontend 
-      depends_on:
-         - eventtokenserver
-         - eventcatalog
