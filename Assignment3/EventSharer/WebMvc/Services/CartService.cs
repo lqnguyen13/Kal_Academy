@@ -101,6 +101,7 @@ namespace WebMvc.Services
                     Units = x.Quantity,
                     UnitPrice = x.EventPrice
                 });
+                order.OrderTotal += (x.Quantity * x.EventPrice);
             });
             return order;
         }
