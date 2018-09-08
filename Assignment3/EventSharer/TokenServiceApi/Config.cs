@@ -19,7 +19,6 @@ namespace TokenServiceApi
             urls.Add("Mvc", configuration.GetValue<string>("MvcClient"));
             urls.Add("BasketApi", configuration.GetValue<string>("BasketApiClient"));
             urls.Add("OrderApi", configuration.GetValue<string>("OrderApiClient"));
-
             return urls;
 
         }
@@ -40,7 +39,6 @@ namespace TokenServiceApi
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-               // new IdentityResources.Email()
             };
         }
         public static IEnumerable<Client> GetClients(Dictionary<string, string> clientUrls)
@@ -53,7 +51,6 @@ namespace TokenServiceApi
                     ClientId = "mvc",
                     ClientSecrets = new [] { new Secret("secret".Sha256())},
                     AllowedGrantTypes = GrantTypes.Hybrid,
-
                     RedirectUris = {$"{clientUrls["Mvc"]}/signin-oidc"},
                     PostLogoutRedirectUris = {$"{clientUrls["Mvc"]}/signout-callback-oidc"},
                     AllowAccessTokensViaBrowser = false,
@@ -62,14 +59,11 @@ namespace TokenServiceApi
                     AlwaysIncludeUserClaimsInIdToken = true,
                     AllowedScopes = new List<string>
                     {
-
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.OfflineAccess,
-                      //  IdentityServerConstants.StandardScopes.Email,
                         "order",
                         "basket",
-
                     }
 
                 },
@@ -79,15 +73,12 @@ namespace TokenServiceApi
                     ClientName = "Basket Swagger UI",
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
-
                     RedirectUris = { $"{clientUrls["BasketApi"]}/swagger/o2c.html" },
                     PostLogoutRedirectUris = { $"{clientUrls["BasketApi"]}/swagger/" },
-
-                     AllowedScopes = new List<string>
-                     {
-
+                    AllowedScopes = new List<string>
+                    {
                         "basket"
-                     }
+                    }
                 },
                 new Client
                 {
@@ -95,15 +86,12 @@ namespace TokenServiceApi
                     ClientName = "Order Swagger UI",
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
-
                     RedirectUris = { $"{clientUrls["OrderApi"]}/swagger/o2c.html" },
                     PostLogoutRedirectUris = { $"{clientUrls["OrderApi"]}/swagger/" },
-
-                     AllowedScopes = new List<string>
-                     {
-
+                    AllowedScopes = new List<string>
+                    {
                         "order"
-                     }
+                    }
                 }
             };
         }
