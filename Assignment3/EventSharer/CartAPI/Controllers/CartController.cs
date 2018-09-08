@@ -10,6 +10,8 @@ using CartAPI.Model;
 
 namespace CartAPI.Controllers
 {
+    [Route("api/v1/[controller]")]
+
     public class CartController : Controller
     {
         private ICartRepository _repository;

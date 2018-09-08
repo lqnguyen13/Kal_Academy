@@ -7,7 +7,7 @@ namespace WebMvc.Models.CartModels
 {
     public class Cart
     {
-        public List<CartItem> Items { get; set; }
+        public List<CartItem> Items { get; set; } = new List<CartItem>();
         public string BuyerId { get; set; }
 
         public decimal Total()
