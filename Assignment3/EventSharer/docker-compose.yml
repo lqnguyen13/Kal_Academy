@@ -13,7 +13,7 @@ services:
       environment: 
          ASPNETCORE_ENVIRONMENT: Development 
          EventCatalogUrl: http://eventcatalog
-         IdentityUrl: http://10.10.75.1:5120
+         IdentityUrl: http://10.0.75.1:5120
          CartUrl: http://eventcart
          OrderUrl: http://eventorder
       container_name: eventshop
@@ -52,7 +52,7 @@ services:
          dockerfile: Dockerfile
       environment: 
          ASPNETCORE_ENVIRONMENT: Development 
-         MvcClient: http://localhost:5100   
+         MvcClient: http://localhost:5100
          BasketApiClient: http://localhost:5150
          OrderApiClient: http://localhost:5160
       container_name: eventtokenserviceapi
@@ -114,7 +114,7 @@ services:
       networks:
          - backend
 
-   basekt.data:
+   basket.data:
       image: redis
       ports:
          - "6379:6379"
