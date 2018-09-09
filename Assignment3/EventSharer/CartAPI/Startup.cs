@@ -120,7 +120,7 @@ namespace CartAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -143,6 +143,9 @@ namespace CartAPI
                    c.SwaggerEndpoint($"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json", "Basket.API V1");
                    //c.ConfigureOAuth2("basketswaggerui", "", "", "Basket Swagger UI");
                });
+            var bus = ApplicationContainer.Resolve<IBusControl>();
+            var busHandle = TaskUtil.Await(() => bus.StartAsync());
+            lifetime.ApplicationStopping.Register(() => busHandle.Stop());
         }
     }
 }

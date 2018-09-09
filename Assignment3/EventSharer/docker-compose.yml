@@ -129,8 +129,8 @@ services:
       hostname: myrabbitmq
       ports:
          - "15672:15672"
-         - "5672:5672"
-         - "5671:5671"
+         - "5673:5673"
+         - "5674:5674"
       volumes:
          - ~/rabbitmq:/var/lib/rabbitmq/mnesia   
       networks:
