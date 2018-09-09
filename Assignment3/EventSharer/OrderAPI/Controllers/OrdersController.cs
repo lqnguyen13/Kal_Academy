@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OrderAPI.Data;
 using OrderAPI.Models;
+using Common.Messaging;
+
 
 namespace OrderAPI.Controllers
 {
@@ -18,9 +21,10 @@ namespace OrderAPI.Controllers
         private readonly IOptionsSnapshot<OrderSettings> _settings;
 
         private readonly ILogger<OrdersContext> _logger;
+        private IBus _bus;
 
         public OrdersController(OrdersContext ordersContext, ILogger<OrdersContext> logger,
-            IOptionsSnapshot<OrderSettings> settings)
+            IOptionsSnapshot<OrderSettings> settings, IBus bus)
         {
             _settings = settings;
             // _ordersContext = ordersContext
@@ -29,6 +33,7 @@ namespace OrderAPI.Controllers
 
             ((DbContext)ordersContext).ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 
+            _bus = bus;
             _logger = logger;
         }
 
@@ -47,6 +52,7 @@ namespace OrderAPI.Controllers
             _ordersContext.OrderItems.AddRange(order.OrderItems);
 
             await _ordersContext.SaveChangesAsync();
+            _bus.Publish(new OrderCompletedEvent(order.BuyerId)).Wait();
             return CreatedAtRoute("GetOrder", new { id = order.OrderId }, order);
         }
 

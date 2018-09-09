@@ -13,6 +13,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 using Swashbuckle.AspNetCore.Swagger;
+using Autofac;
+using CartAPI.Messaging.Consumers;
+using MassTransit;
+using Autofac.Extensions.DependencyInjection;
+using MassTransit.Util;
+using CartAPI.Infrastructure.Filters;
+
 
 namespace CartAPI
 {
@@ -23,10 +30,11 @@ namespace CartAPI
             Configuration = configuration;
         }
 
+        public IContainer ApplicationContainer { get; private set; }
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvcCore(options => 
             options.Filters.Add(typeof(HttpGlobalExceptionFilter))
@@ -60,14 +68,54 @@ namespace CartAPI
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
+                    poll => poll.AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<ICartRepository, RedisCartRepository>();
-              // services.AddTransient<IIdentityService, IdentityService>();
+            // services.AddTransient<IIdentityService, IdentityService>();
+
+            var builder = new ContainerBuilder();
+
+            // register a specific consumer
+            builder.RegisterType<OrderCompletedEventConsumer>();
+
+            builder.Register(context =>
+                {
+                    var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
+                    {
+
+
+                        var host = cfg.Host(new Uri("rabbitmq://rabbitmq/"), "/", h =>
+                        {
+                            h.Username("guest");
+                            h.Password("guest");
+                        });
+
+
+                        // https://stackoverflow.com/questions/39573721/disable-round-robin-pattern-and-use-fanout-on-masstransit
+                        cfg.ReceiveEndpoint(host, "ShoesOncontainers" + Guid.NewGuid().ToString(), e =>
+                        {
+                            e.LoadFrom(context);
+
+                        });
+                    });
+
+                    return busControl;
+                })
+                .SingleInstance()
+                .As<IBusControl>()
+                .As<IBus>();
+
+            builder.Populate(services);
+            ApplicationContainer = builder.Build();
+
+            return new AutofacServiceProvider(ApplicationContainer);
+
+
+
 
         }
 

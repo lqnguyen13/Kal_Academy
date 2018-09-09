@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,9 +19,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using OrderAPI;
 using OrderAPI.Data;
 using OrderAPI.Infrastructure.Filters;
 using Swashbuckle.AspNetCore.Swagger;
+using RabbitMQ.Client;
 
 namespace OrderAPI
 {
@@ -25,6 +31,7 @@ namespace OrderAPI
     {
         ILogger _logger;
         public IConfiguration Configuration { get; }
+        public IContainer ApplicationContainer { get; private set; }
 
         public Startup(IConfiguration configuration, ILoggerFactory loggerFactory)
         {
@@ -33,7 +40,7 @@ namespace OrderAPI
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvcCore(options => options.Filters.Add(typeof(HttpGlobalExceptionFilter)))
                 .AddJsonFormatters(Options => 
@@ -87,6 +94,7 @@ namespace OrderAPI
                     {
                         {"order", "Order Api" }
                     }
+
                 });
                 options.OperationFilter<AuthorizeCheckOperationFilter>();
             });
@@ -94,8 +102,35 @@ namespace OrderAPI
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+                    poly => poly.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
             });
+
+            var builder = new ContainerBuilder();
+            builder.Register(c =>
+                {
+                    return Bus.Factory.CreateUsingRabbitMq(rmq =>
+                    {
+                        rmq.Host(new Uri("rabbitmq://rabbitmq"), "/", h =>
+                        {
+                            h.Username("guest");
+                            h.Password("guest");
+                        });
+                        rmq.ExchangeType = ExchangeType.Fanout;
+                    });
+
+                }).
+                As<IBusControl>()
+                .As<IBus>()
+                .As<IPublishEndpoint>()
+                .SingleInstance();
+
+            builder.Populate(services);
+            ApplicationContainer = builder.Build();
+            return new AutofacServiceProvider(ApplicationContainer);
+
         }
 
         private void ConfigureAuthService(IServiceCollection services)

@@ -81,6 +81,7 @@ services:
       depends_on:
          - basket.data
          - eventtokenserver
+         - rabbitmq
 
    eventorder:
       image: events/order
@@ -102,6 +103,7 @@ services:
       depends_on:
          - eventmssqlserver
          - eventtokenserver
+         - rabbitmq
 
    eventmssqlserver:
       image: "microsoft/mssql-server-linux:latest"
@@ -120,4 +122,18 @@ services:
          - "6379:6379"
       networks:
          - backend
+
+   rabbitmq:
+      image: rabbitmq:3-management
+      container_name: rabbitmq
+      hostname: myrabbitmq
+      ports:
+         - "15672:15672"
+         - "5672:5672"
+         - "5671:5671"
+      volumes:
+         - ~/rabbitmq:/var/lib/rabbitmq/mnesia   
+      networks:
+        - backend 
+
 
