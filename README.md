@@ -11,4 +11,4 @@ Bootcamp assignments consisted of team projects focusing on developing technical
 * Technologies used: C++
 ### Assignment 3 - Microservices project
 * Design and build an online event-booking system, like [Eventbrite](www.eventbrite.com)
-* Technologies used: C#, ASP.NET, SQL, Redis, RabbitMQ, Swagger
+* Technologies used: C#, ASP.NET, SQL, Redis, RabbitMQ, Swagger, Docker
