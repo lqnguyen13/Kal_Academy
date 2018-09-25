@@ -2,5 +2,9 @@
 
 Build an [eventbrite](http://eventbrite.com) like site.
 
-### Part 3a
-First part of the assignment is to build the services for the eventbrite.
+Project involved building the following:
+* Catalog API for displaying events
+* TokenService API for authentication
+* Cart API for placing "events" in user shopping cart
+* Order API connecting to external payment service (Stripe)
+* WebMVC client
