@@ -1,4 +1,4 @@
-# Kal_Academy
+# Kal Academy
 Software Development Bootcamp Cohort 1 - Team Assignments
 
 Bootcamp assignments consisted of team projects focusing on developing technical skills as well as team work.
